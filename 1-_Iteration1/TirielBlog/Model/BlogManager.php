@@ -5,26 +5,19 @@ namespace TirielBlog\Model;
 class BlogManager
 {
     protected $dao;
-    protected $totalPages;
     protected $offset;
     protected $limit;
 
     public function __construct($offset, $limit)
     {
         $this->dao = PDOFactory::getMysqlCo();
-        $this->offset = $offset;
-        $this->limit = $limit;
-        $this->setTotalPages();
+        $this->offset = (int) $offset;
+        $this->limit = (int) $limit;
     }
 
-    public function getTotalPages()
+    public function getLimit()
     {
-        return $this->totalPages;
-    }
-
-    public function setTotalPages()
-    {
-        $this->totalPages = ceil($this->countPosts() / $this->limit);
+        return $this->limit;
     }
 
     public function getPosts($page)
