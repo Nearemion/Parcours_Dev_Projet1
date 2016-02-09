@@ -8,14 +8,24 @@
 * Author
 * Publication date
 
+**This project has been made in OOP** so future iterations and components will be easier to plug in.
+
 **Five blog posts will be displayed on each page**, pagination system will have to be included for older posts.
 
 #### Files:
 * PHP files:
-  * Bootstrap
-  * Controller
+  * Bootstrap: index.php
+  * Controller/BlogController.php
+  * Entity/Post.php
+  * Lib/SplClassLoader.php
   * Model
+    * Model/BlogManager.php
+    * Model/PDOFactory.php
   * View
+    * 404.php
+    * Index.php
+    * layout.php
+    * SingleView.php
 * MySQL files:
   * Database Schema
   * Demo datas

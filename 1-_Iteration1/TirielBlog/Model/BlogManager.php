@@ -1,6 +1,10 @@
 <?php
 
-namespace TirielBlog\Model;
+namespace Model;
+
+use Entity\Post;
+use Model\PDOFactory;
+use \PDO;
 
 class BlogManager
 {
@@ -8,11 +12,21 @@ class BlogManager
     protected $offset;
     protected $limit;
 
-    public function __construct($offset, $limit)
+    public function __construct()
     {
         $this->dao = PDOFactory::getMysqlCo();
-        $this->offset = (int) $offset;
-        $this->limit = (int) $limit;
+    }
+
+    public function getOffset()
+    {
+        return $this->offset;
+    }
+
+    public function setOffset($offset)
+    {
+        if (is_int($offset) && isset($offset)) {
+            $this->offset = $offset;
+        }
     }
 
     public function getLimit()
@@ -20,15 +34,36 @@ class BlogManager
         return $this->limit;
     }
 
+    public function setLimit($limit)
+    {
+        if (is_int($limit) && isset($limit)) {
+            $this->limit = $limit;
+        }
+    }
+
     public function getPosts($page)
     {
         $currentOffset = ($page-1) * $this->offset;
 
-        $query = $this->dao->prepare('SELECT (*) FROM blog_posts ORDER BY date DESC LIMIT :offset, :limit');
-        $query->bindParam(':offset', $currentOffset, PDO::PARAM_INT);
-        $query->bindParam(':limit', $this->limit, PDO::PARAM_INT);
+        $query = $this->dao->prepare('SELECT * FROM blog_posts ORDER BY date DESC LIMIT :offset, :limit');
+        $query->bindParam(':offset', $currentOffset, \PDO::PARAM_INT);
+        $query->bindParam(':limit', $this->limit, \PDO::PARAM_INT);
         $query->execute();
+        $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\Post');
+
         $result = $query->fetchAll();
+
+        return $result;
+    }
+
+    public function getSinglePost($id)
+    {
+        $query = $this->dao->prepare('SELECT * FROM blog_posts WHERE id = :id');
+        $query->bindParam(':id', $id, \PDO::PARAM_INT);
+        $query->execute();
+        $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\Post');
+
+        $result = $query->fetchObject('\Entity\Post');
 
         return $result;
     }

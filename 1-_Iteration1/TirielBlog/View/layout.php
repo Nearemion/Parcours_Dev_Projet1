@@ -1,3 +1,8 @@
+<?php
+
+$today = new \DateTime('now');
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,13 +12,19 @@
     <link rel="stylesheet" type="text/css" href="main.css" />
 </head>
 <body>
-<header class="jumbotron">
-    <h1>Tiriel's Home Made Blog</h1>
-    <p>Baked with love!</p>
-</header>
-<section>
-    <?php echo $content; ?>
-</section>
-
+<div class="container">
+    <header class="jumbotron">
+        <h1>Tiriel's Home Made Blog</h1>
+        <p>Baked with love!</p>
+    </header>
+    <section>
+        <?php echo $content; ?>
+    </section>
+    <footer class="footer text-center">
+        <div class="row">
+            <p>Made by Tiriel, © <?php echo $today->format('Y'); ?> and beyond</p>
+        </div>
+    </footer>
+</div>
 </body>
 </html>

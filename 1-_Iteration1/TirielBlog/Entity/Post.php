@@ -1,6 +1,6 @@
 <?php
 
-namespace TirielBlog\Model\Entity;
+namespace Entity;
 
 class Post
 {
@@ -47,12 +47,12 @@ class Post
 
     public function setAuthor($author)
     {
-        $this->author = $author
+        $this->author = $author;
     }
 
-    public function getDate($format = null)
+    public function getDate()
     {
-        return $this->date($format);
+        return $this->date;
     }
 
     public function setDate(\DateTime $date)
