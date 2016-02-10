@@ -2,7 +2,7 @@
 
 namespace View;
 
-use Model\Entity\Post;
+use Lib\Entity\Post;
 
 class Index
 {

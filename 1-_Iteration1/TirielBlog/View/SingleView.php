@@ -2,7 +2,7 @@
 
 namespace View;
 
-use Entity\Post;
+use Lib\Entity\Post;
 
 class SingleView
 {

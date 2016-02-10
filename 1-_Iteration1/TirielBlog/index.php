@@ -9,8 +9,8 @@ require __DIR__.'./Lib/SplClassLoader.php';
 $controllerLoader = new SplClassLoader('Controller', './');
 $controllerLoader->register();
 
-$entityLoader= new SplClassLoader('Entity', './');
-$entityLoader->register();
+$libLoader= new SplClassLoader('Lib', './');
+$libLoader->register();
 
 $modelLoader = new SplClassLoader('Model', './');
 $modelLoader->register();

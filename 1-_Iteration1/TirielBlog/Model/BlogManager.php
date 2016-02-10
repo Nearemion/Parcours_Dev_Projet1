@@ -2,7 +2,7 @@
 
 namespace Model;
 
-use Entity\Post;
+use Lib\Entity\Post;
 use Model\PDOFactory;
 use \PDO;
 
@@ -49,7 +49,7 @@ class BlogManager
         $query->bindParam(':offset', $currentOffset, \PDO::PARAM_INT);
         $query->bindParam(':limit', $this->limit, \PDO::PARAM_INT);
         $query->execute();
-        $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\Post');
+        $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Lib\Entity\Post');
 
         $result = $query->fetchAll();
 
@@ -61,9 +61,9 @@ class BlogManager
         $query = $this->dao->prepare('SELECT * FROM blog_posts WHERE id = :id');
         $query->bindParam(':id', $id, \PDO::PARAM_INT);
         $query->execute();
-        $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\Post');
+        $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Lib\Entity\Post');
 
-        $result = $query->fetchObject('\Entity\Post');
+        $result = $query->fetchObject('\Lib\Entity\Post');
 
         return $result;
     }
