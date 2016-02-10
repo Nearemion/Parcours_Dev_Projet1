@@ -1,8 +1,9 @@
 <?php
 
 use Controller\BlogController;
-use Lib\SplClassLoader;
 use Model\BlogManager;
+use Lib\SplClassLoader;
+use Lib\Router;
 
 require __DIR__.'./Lib/SplClassLoader.php';
 
@@ -22,24 +23,7 @@ $manager = new BlogManager;
 $controller = new BlogController($manager);
 
 $uri = $_SERVER['REQUEST_URI'];
-
-if (preg_match('#^/([0-9]*)$#', $uri, $route)) {
-
-    if ($route[1] !== 1 && (int) $route[1] > 2) {
-        $controller->getManager()->setOffset((($route[1]-2)*5));
-        $content = $controller->indexAction($route[1]);
-    } else if ($route[1] == 2) {
-        $controller->getManager()->setOffset(5);
-        $content = $controller->indexAction($route[1]);
-    } else {
-        $content = $controller->indexAction();
-    }
-
-} else if (preg_match('#/post-([0-9]*)$#', $uri, $route)) {
-
-    $content = $controller->viewAction($route[1]);
-} else {
-    header('Location: View/404.php');
-}
+$router = new Router($controller, $manager, $uri);
+$content = $router->route();
 
 include './View/layout.php';
