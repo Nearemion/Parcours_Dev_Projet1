@@ -23,6 +23,7 @@ $today = new \DateTime('now');
     <footer class="footer text-center">
         <div class="row">
             <p>Made by Tiriel, © <?php echo $today->format('Y'); ?> and beyond</p>
+            <p><a href="https://github.com/Nearemion/Parcours_Dev_Projet1">Le gitHub du projet</a></p>
         </div>
     </footer>
 </div>
