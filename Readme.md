@@ -16,8 +16,10 @@
 * PHP files:
   * Bootstrap: index.php
   * Controller/BlogController.php
-  * Entity/Post.php
-  * Lib/SplClassLoader.php
+  * Lib
+    * SplClassLoader.php
+    * Router.php
+    * Entity/Post.php
   * Model
     * Model/BlogManager.php
     * Model/PDOFactory.php
