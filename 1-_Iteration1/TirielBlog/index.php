@@ -5,7 +5,7 @@ use Model\BlogManager;
 use Lib\SplClassLoader;
 use Lib\Router;
 
-require __DIR__.'./Lib/SplClassLoader.php';
+require __DIR__.'/Lib/SplClassLoader.php';
 
 $controllerLoader = new SplClassLoader('Controller', './');
 $controllerLoader->register();
