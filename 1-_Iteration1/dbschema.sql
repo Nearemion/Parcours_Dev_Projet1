@@ -1,8 +1,0 @@
-CREATE TABLE IF NOT EXISTS blog_posts (
-    id INT NOT NULL AUTO_INCREMENT,
-    title VARCHAR(255) NOT NULL,
-    content TEXT NOT NULL,
-    author VARCHAR(255) NOT NULL,
-    date DATETIME NOT NULL,
-    PRIMARY KEY (id)
-) ENGINE=innodb, CHARSET=utf8;
