@@ -10,6 +10,7 @@ class Comment
     private $gHash;
     private $comment;
     private $date;
+    private $post;
     
     public function getId()
     {
@@ -77,5 +78,17 @@ class Comment
     public function setDate($date)
     {
         $this->date = $date;
+    }
+
+    public function getPost()
+    {
+        return $this->post;
+    }
+
+    public function setPost($post)
+    {
+        if (is_int($post)) {
+            $this->post = $post;
+        }
     }
 }

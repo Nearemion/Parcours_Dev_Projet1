@@ -47,7 +47,16 @@ They will be authorized the following:
 * PHP Files:
   * Lib
     * Entity/Comment.php (added)
+    * Form
+      * Field.php (added, abstract class)
+      * FormType.php (added, form builder)
+      * Input.php (added)
+      * Textarea.php (added)
+    * Hydrator.php (Hydrating trait form Entities and Fields)
+  * View
+    * CommentForm.php (added)
+    * SingleView.php (updated)
 * MySQL Files:
-  * Database Schema (changed)
+  * Database Schema (updated)
 
 *__This file will be updated with actual file names, and with each iteration.__*
