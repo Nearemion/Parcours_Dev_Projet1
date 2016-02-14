@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use Lib\Form\FormType;
 use Model\BlogManager;
 use View\Index;
 use View\SingleView;
@@ -53,6 +54,7 @@ class BlogController
     public function viewAction($id)
     {
         $post = $this->manager->getSinglePost($id);
+        $post->setDate(new \DateTime($post->getDate()));
         $page = new SingleView($post);
         $content = $page->display();
 

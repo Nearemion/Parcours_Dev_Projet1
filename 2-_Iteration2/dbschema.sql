@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `blog_posts` (
     `title` VARCHAR(255) NOT NULL,
     `content` TEXT NOT NULL,
     `author` VARCHAR(255) NOT NULL,
+    `nbComment` INT,
     `date` DATETIME NOT NULL,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB, CHARSET=utf8;
@@ -22,5 +23,6 @@ CREATE TABLE IF NOT EXISTS `blog_comments` (
   `gHash` VARCHAR(255) NOT NULL,
   `comment` TEXT NOT NULL,
   `date` DATETIME NOT NULL,
+  `postId` INT NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;

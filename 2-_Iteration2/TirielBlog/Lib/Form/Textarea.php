@@ -46,19 +46,41 @@ class Textarea extends Field
 
     public function buildWidget()
     {
-        $display =
-        '<label for="'.$this->name.'">'.$this->label.'</label>
-        <textarea name="'.$this->name.'"';
-        if (isset($this->rows)) {
-            $display .= ' rows="'.$this->rows.'"';
+        $display = '<label for="'.$this->name.'"';
+            if(!empty($this->labelAttributes)) {
+                $display .= implode(' ', $this->labelAttributes);
+            }
+            $display .= '>'.$this->label.'</label>';
+
+        if (preg_match('/col-[a-z]{2}-[0-9]{1,2}/', implode(' ', $this->attributes), $match)) {
+            $display.=
+            '<div class="'.$match[0].'">
+                <textarea name="'.$this->name.'"';
+                if (isset($this->rows)) {
+                    $display .= ' rows="'.$this->rows.'"';
+                }
+                if (isset($this->cols)) {
+                    $display .= ' cols="'.$this->cols.'"';
+                }
+                if (isset($this->attributes)) {
+                    $display .= implode(' ', $this->attributes);
+                }
+                $display .= '>'.$this->placeholder.'</textarea>
+            </div>';
+        } else {
+            $display .=
+            '<textarea name="'.$this->name.'"';
+            if (isset($this->rows)) {
+                $display .= ' rows="'.$this->rows.'"';
+            }
+            if (isset($this->cols)) {
+                $display .= ' cols="'.$this->cols.'"';
+            }
+            if (isset($this->attributes)) {
+                $display .= implode(' ', $this->attributes);
+            }
+            $display .= '>'.$this->placeholder.'</textarea>';
         }
-        if (isset($this->cols)) {
-            $display .= ' cols="'.$this->cols.'"';
-        }
-        if (isset($this->attributes)) {
-            $display .= ' '.$this->attributes;
-        }
-        $display .= '>'.$this->placeholder.'</textarea>';
 
         return $display;
     }

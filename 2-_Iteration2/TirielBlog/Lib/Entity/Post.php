@@ -4,11 +4,12 @@ namespace Lib\Entity;
 
 class Post
 {
-    protected $id;
-    protected $title;
-    protected $content;
-    protected $author;
-    protected $date;
+    private $id;
+    private $title;
+    private $content;
+    private $author;
+    private $nbComment;
+    private $date;
 
     public function getId()
     {
@@ -48,6 +49,24 @@ class Post
     public function setAuthor($author)
     {
         $this->author = $author;
+    }
+
+    public function getNbComment()
+    {
+        return $this->nbComment;
+    }
+
+    public function addComment()
+    {
+        $this->nbComment++;
+    }
+    public function removeComment()
+    {
+        $this->nbComment--;
+    }
+    public function removeAllComments()
+    {
+        $this->nbComment = null;
     }
 
     public function getDate()

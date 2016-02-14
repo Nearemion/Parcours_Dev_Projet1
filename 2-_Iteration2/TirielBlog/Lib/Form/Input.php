@@ -2,36 +2,11 @@
 
 namespace Lib\Form;
 
-class Input
+class Input extends Field
 {
-    private $label;
     private $type;
     private $types = ['checkbox', 'date', 'email', 'file', 'hidden', 'password', 'radio', 'reset', 'submit', 'text', 'url'];
-    private $name;
     private $value;
-    private $attributes = [];
-
-    public function __construct($label, $type, $name, $value = null)
-    {
-        $this->setLabel($label);
-        $this->setType($type);
-        $this->setName($name);
-        if (isset($value)) {
-            $this->setValue($value);
-        }
-    }
-
-    public function getLabel()
-    {
-        return $this->label;
-    }
-
-    public function setLabel($label)
-    {
-        if (is_string($label)) {
-            $this->label = $label
-        }
-    }
 
     public function getType()
     {
@@ -42,18 +17,6 @@ class Input
     {
         if (is_string($type) && in_array($type, $this->types)) {
             $this->type = $type;
-        }
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setName($name)
-    {
-        if (is_string($name)) {
-            $this->name = $name;
         }
     }
 
@@ -69,29 +32,38 @@ class Input
         }
     }
 
-    public function getAttributes()
-    {
-        return $this->attributes;
-    }
-
-    public function setAttributes($attribute)
-    {
-        if (is_string($attribute)) {
-            $this->attributes[] = $attribute;
-        }
-    }
-
     public function buildWidget()
     {
-        $display =
-        '<label for="'.$this->name.'">'.$this->label.'</label>
-        <input type="'.$this->type.'" name="'.$this->name.'"';
-
-        if (isset($this->value)) {
-            $display .= 'value="'.$this->value.'" ';
-        }
+        $attributes = implode(' ', $this->attributes);
+        $display = '';
         
-        $display .= implode(' ', $attributes).'/>';
+        if (!in_array($this->getType(), array('hidden', 'reset', 'submit'))) {
+            $display .= '<label for="'.$this->name.'"';
+			if(!empty($this->labelAttributes)) {
+			    $display .= implode(' ', $this->labelAttributes);
+			}
+			$display .= '>'.$this->label.'</label>';
+        }
+        if (preg_match('/col-[a-z]{2}-[0-9]{1,2}/', implode(' ', $this->attributes), $match)) {
+            $display .=
+            '<div class="'.$match[0].'">
+                <input type="'.$this->type.'" name="'.$this->name.'"';
+
+            if (isset($this->value)) {
+                $display .= 'value="'.$this->value.'" ';
+            }
+            
+            $display .= strval($attributes).'/>
+            </div>';
+        } else {
+            $display .= '<input type="'.$this->type.'" name="'.$this->name.'"';
+
+            if (isset($this->value)) {
+                $display .= 'value="'.$this->value.'" ';
+            }
+            
+            $display .= strval($attributes).'/>';
+        }
 
         return $display;
     }
