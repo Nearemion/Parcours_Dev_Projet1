@@ -42,21 +42,23 @@ class SingleView
             </div></div>';
 
         foreach ($comments as $comment) {
+                $comment->setCommentDate(new \DateTime($comment->getCommentDate()));
                 $display .=
                 '<div class="row">
-                    <div class="col-sm-12"><img src="http://www.gravatar.com/avatar/'.$comment->getGHash().'" alt="Gravatar" />
-                    <h3><a href="mailto:'.htmlspecialchars($comment->getMailAdress()).'">'.htmlspecialchars($comment->getPseudo()).'</a></h3></div>
-                    <div class="col-sm-12">
+                    <div class="col-sm-12"><img src="http://www.gravatar.com/avatar/'.$comment->getGHash().'?s=80" alt="Gravatar" class="col-sm-1" />
+                    <h3 class="col-sm-8"><a href="mailto:'.htmlspecialchars($comment->getMailAdress()).'">'.htmlspecialchars($comment->getPseudo()).'</a></h3></div>
+                    <div class="col-sm-offset-1 col-sm-11">
                         <p>'.htmlspecialchars($comment->getComment()).'</p>
                     </div>
-                    <p><em>Le '.$comment->getDate()->format('d-m-Y').' à '.$comment->getDate()->format('H:i:s').'</em></p>';
+                    <p class="col-sm-offset-8"><em>Le '.$comment->getCommentDate()->format('Y-m-d').' à '.$comment->getCommentDate()->format('H:i:s').'</em></p></div>';
         }
+
         $display .=
-        '<div><a href="/"><button class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-chevron-left"> </span>Retour à l\'index</button></a></div>';
+        '<br /><div><a href="/"><button class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-chevron-left"> </span>Retour à l\'index</button></a></div><br />';
 
         $display .=
         '<div class="row">
-            <div class="well col-sm-offset-2 col-sm-8">'.$commentForm->commentForm().'<br />* : élément obligatoire.</div>
+            <div class="well col-sm-offset-2 col-sm-8">'.$commentForm->commentForm($post->getId()).'<br />* : élément obligatoire.</div>
         </div>';
 
         return $display;

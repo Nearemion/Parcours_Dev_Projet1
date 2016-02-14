@@ -63,7 +63,7 @@ class BlogManager
     public function getSinglePost($id)
     {
         $result = [];
-        $query = $this->dao->prepare('SELECT blog_posts.id as id, blog_posts.title, blog_posts.author, blog_posts.content, blog_posts.date as postDate, blog_comments.id as commentId, blog_comments.pseudo, blog_comments.mailAdress, blog_comments.gHash, blog_comments.comment, blog_comments.date as commentDate, blog_comments.postId FROM blog_posts LEFT JOIN blog_comments ON blog_posts.id = blog_comments.postId WHERE blog_posts.id = :id');
+        $query = $this->dao->prepare('SELECT blog_posts.id as id, blog_posts.title, blog_posts.author, blog_posts.content, blog_posts.date as postDate, blog_comments.id as commentId, blog_comments.pseudo, blog_comments.mailAdress, blog_comments.gHash, blog_comments.comment, blog_comments.commentDate, blog_comments.postId FROM blog_posts LEFT JOIN blog_comments ON blog_posts.id = blog_comments.postId WHERE blog_posts.id = :id');
         $query->bindParam(':id', $id, \PDO::PARAM_INT);
         $query->execute();
 
@@ -97,5 +97,42 @@ class BlogManager
     {
         $rows = $this->dao->query('SELECT COUNT(*) FROM blog_posts')->fetchColumn();
         return $rows;
+    }
+
+    public function processCommentForm()
+    {
+        if ($_POST['csrf_token'] == $_SESSION['token']) {
+            if (!empty($_POST['pseudo'])) {
+                $pseudo = htmlspecialchars($_POST['pseudo']);
+            } else {
+                $pseudo = 'A.Nonymous';
+            }
+
+            if (!empty($_POST['email'])) {
+                $mail = htmlspecialchars($_POST['email']);
+            } else {
+                $mail = "email@example.com";
+            }
+
+            $gHash = md5(strtolower(trim($mail)));
+            $comment = htmlspecialchars($_POST['comment']);
+            $date = new \DateTime();
+            $date = $date->format('Y-m-d H:i:s');
+            $postId = $_POST['postId'];
+
+            $query = $this->dao->prepare('INSERT INTO blog_comments (pseudo, mailAdress, gHash, comment, commentDate, postId) VALUES (:pseudo, :mailAdress, :gHash, :comment, :commentDate, :postId)');
+            $query->bindParam(':pseudo', $pseudo, \PDO::PARAM_STR);
+            $query->bindParam(':mailAdress', $mail, \PDO::PARAM_STR);
+            $query->bindParam(':gHash', $gHash, \PDO::PARAM_STR);
+            $query->bindParam(':comment', $comment, \PDO::PARAM_STR);
+            $query->bindParam(':commentDate', $date);
+            $query->bindParam(':postId', $postId, \PDO::PARAM_INT);
+
+            $query->execute();
+
+            $update = $this->dao->prepare('UPDATE blog_posts SET nbComment = nbComment+1 WHERE id = :id');
+            $update->bindParam(':id', $_POST['postId'], \PDO::PARAM_INT);
+            $update->execute();
+        }
     }
 }

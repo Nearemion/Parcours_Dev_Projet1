@@ -63,17 +63,9 @@ class Post
         return $this->nbComment;
     }
 
-    public function addComment()
+    public function setNbComment($nb)
     {
-        $this->nbComment++;
-    }
-    public function removeComment()
-    {
-        $this->nbComment--;
-    }
-    public function removeAllComments()
-    {
-        $this->nbComment = null;
+        $this->nbComment = $nb;
     }
 
     public function getDate()

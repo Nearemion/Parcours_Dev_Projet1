@@ -8,8 +8,13 @@ use Lib\Form\Textarea;
 
 class CommentForm
 {
-    public function commentForm()
+    public function commentForm($id)
     {
+        $postId = new Input(array(
+            'type' => 'hidden',
+            'name' => 'postId',
+            'value' => $id
+        ));
         $pseudo = new Input(array(
             'type' => 'text',
             'name' => 'pseudo',
@@ -38,10 +43,11 @@ class CommentForm
         ));
                 
         $form = new FormType(array(
-            'action' => '#',
+            'action' => '/post-'.$id,
             'method' => 'post',
             'attributes' => 'class="form-horizontal"'
         ));
+        $form->addField($postId);
         $form->addField($pseudo);
         $form->addField($mail);
         $form->addField($comment);

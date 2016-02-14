@@ -7,13 +7,6 @@ use Lib\Router;
 
 session_start();
 
-if (!isset($_SESSION['token'])) {
-    $token = md5(uniqid(rand(), true));
-    $_SESSION['token'] = $token;
-} else {
-    $token = $_SESSION['token'];
-}
-
 require __DIR__.'/Lib/SplClassLoader.php';
 
 $controllerLoader = new SplClassLoader('Controller', '');
@@ -30,6 +23,10 @@ $viewLoader->register();
 
 $manager = new BlogManager;
 $controller = new BlogController($manager);
+
+if (isset($_POST['comment'])) {
+    $manager->processCommentForm();
+}
 
 $uri = $_SERVER['REQUEST_URI'];
 $router = new Router($controller, $manager, $uri);

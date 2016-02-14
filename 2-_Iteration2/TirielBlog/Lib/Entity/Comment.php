@@ -11,7 +11,7 @@ class Comment
     private $mailAdress;
     private $gHash;
     private $comment;
-    private $date;
+    private $commentDate;
     private $postId;
 
     public function __construct($datas)
@@ -77,14 +77,14 @@ class Comment
         }
     }
 
-    public function getDate()
+    public function getCommentDate()
     {
-        return $this->date;
+        return $this->commentDate;
     }
 
-    public function setDate($date)
+    public function setCommentDate($date)
     {
-        $this->date = $date;
+        $this->commentDate = $date;
     }
 
     public function getPostId()

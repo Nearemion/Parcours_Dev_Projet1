@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `blog_comments` (
   `mailAdress` VARCHAR(255) NOT NULL,
   `gHash` VARCHAR(255) NOT NULL,
   `comment` TEXT NOT NULL,
-  `date` DATETIME NOT NULL,
+  `commentDate` DATETIME NOT NULL,
   `postId` INT NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
