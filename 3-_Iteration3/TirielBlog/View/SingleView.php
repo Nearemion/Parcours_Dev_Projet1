@@ -42,7 +42,6 @@ class SingleView
             </div></div>';
 
         foreach ($comments as $comment) {
-                $comment->setCommentDate(new \DateTime($comment->getCommentDate()));
                 $display .=
                 '<div class="row">
                     <div class="col-sm-12"><img src="http://www.gravatar.com/avatar/'.$comment->getGHash().'?s=80" alt="Gravatar" class="col-sm-1" />

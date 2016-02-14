@@ -84,7 +84,7 @@ class BlogManager
                     'mailAdress' => $row['mailAdress'],
                     'gHash' => $row['gHash'],
                     'comment' => $row['comment'],
-                    'date' => new \DateTime($row['commentDate']));
+                    'commentDate' => new \DateTime($row['commentDate']));
                 $comment = new Comment($commentArray);
                 $result[] = $comment;
             }
