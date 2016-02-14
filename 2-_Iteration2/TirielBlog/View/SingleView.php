@@ -9,11 +9,17 @@ class SingleView
     private $post;
     private $comments = [];
 
-    public function __construct(Post $post)
+    public function __construct($results)
     {
-        $comments = [];
-        $this->post = $post;
-        $this->comments = $comments;
+        foreach ($results as $result) {
+            if (get_class($result) == 'Lib\Entity\Post') {
+                $this->post = $result;
+            } else if (get_class($result) == 'Lib\Entity\Comment') {
+                $this->comments[] = $result;
+            } else {
+                $this->post = $results;
+            }
+        }
     }
 
     public function display()
@@ -21,6 +27,7 @@ class SingleView
         $post = $this->post;
         $comments = $this->comments;
         $commentForm = new CommentForm();
+
         $display =
             '<div class="row">
             <h1 class="col-sm-8">'.htmlspecialchars($post->getTitle()).'</h1>
@@ -49,7 +56,7 @@ class SingleView
 
         $display .=
         '<div class="row">
-            <div class="well col-sm-offset-2 col-sm-8">'.$commentForm->commentForm().'</div>
+            <div class="well col-sm-offset-2 col-sm-8">'.$commentForm->commentForm().'<br />* : élément obligatoire.</div>
         </div>';
 
         return $display;

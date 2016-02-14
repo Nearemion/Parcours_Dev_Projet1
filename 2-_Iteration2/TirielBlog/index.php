@@ -5,6 +5,15 @@ use Model\BlogManager;
 use Lib\SplClassLoader;
 use Lib\Router;
 
+session_start();
+
+if (!isset($_SESSION['token'])) {
+    $token = md5(uniqid(rand(), true));
+    $_SESSION['token'] = $token;
+} else {
+    $token = $_SESSION['token'];
+}
+
 require __DIR__.'/Lib/SplClassLoader.php';
 
 $controllerLoader = new SplClassLoader('Controller', '');

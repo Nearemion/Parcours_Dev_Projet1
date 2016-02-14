@@ -2,6 +2,7 @@
 
 namespace Model;
 
+use Lib\Entity\Comment;
 use Lib\Entity\Post;
 use Model\PDOFactory;
 use \PDO;
@@ -44,26 +45,50 @@ class BlogManager
     public function getPosts($page)
     {
         $currentOffset = ($page-1) * $this->offset;
+        $posts = [];
 
         $query = $this->dao->prepare('SELECT * FROM blog_posts ORDER BY date DESC LIMIT :offset, :limit');
         $query->bindParam(':offset', $currentOffset, \PDO::PARAM_INT);
         $query->bindParam(':limit', $this->limit, \PDO::PARAM_INT);
         $query->execute();
-        $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Lib\Entity\Post');
 
-        $result = $query->fetchAll();
+        while (($row = $query->fetch(PDO::FETCH_ASSOC)) !== false) {
+            $post = new Post($row);
+            $posts[] = $post;
+        }
 
-        return $result;
+        return $posts;
     }
 
     public function getSinglePost($id)
     {
-        $query = $this->dao->prepare('SELECT * FROM blog_posts WHERE id = :id');
+        $result = [];
+        $query = $this->dao->prepare('SELECT blog_posts.id as id, blog_posts.title, blog_posts.author, blog_posts.content, blog_posts.date as postDate, blog_comments.id as commentId, blog_comments.pseudo, blog_comments.mailAdress, blog_comments.gHash, blog_comments.comment, blog_comments.date as commentDate, blog_comments.postId FROM blog_posts LEFT JOIN blog_comments ON blog_posts.id = blog_comments.postId WHERE blog_posts.id = :id');
         $query->bindParam(':id', $id, \PDO::PARAM_INT);
         $query->execute();
-        $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Lib\Entity\Post');
 
-        $result = $query->fetchObject('\Lib\Entity\Post');
+        while (($row = $query->fetch(PDO::FETCH_ASSOC)) !== false) {
+            $postArray = array(
+                'id' => $row['id'],
+                'title' => $row['title'],
+                'author' => $row['author'],
+                'content' => $row['content'],
+                'date' => new \DateTime($row['postDate']));
+            $post = new Post($postArray);
+            $result[] = $post;
+
+            if (!empty($row['commentId'])) {
+                $commentArray = array(
+                    'id' => $row['commentId'],
+                    'pseudo' => $row['pseudo'],
+                    'mailAdress' => $row['mailAdress'],
+                    'gHash' => $row['gHash'],
+                    'comment' => $row['comment'],
+                    'date' => new \DateTime($row['commentDate']));
+                $comment = new Comment($commentArray);
+                $result[] = $comment;
+            }
+        }
 
         return $result;
     }

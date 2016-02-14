@@ -7,7 +7,7 @@ abstract class Field
     use \Lib\Hydrator;
 
     protected $label;
-	protected $labelAttributes = [];
+    protected $labelAttributes = [];
     protected $name;
     protected $attributes = [];
 

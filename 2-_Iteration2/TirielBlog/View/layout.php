@@ -1,5 +1,4 @@
 <?php
-
 $today = new \DateTime('now');
 
 ?>

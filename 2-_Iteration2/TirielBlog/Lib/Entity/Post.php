@@ -4,12 +4,19 @@ namespace Lib\Entity;
 
 class Post
 {
+    use \Lib\Hydrator;
+
     private $id;
     private $title;
     private $content;
     private $author;
     private $nbComment;
     private $date;
+
+    public function __construct($datas)
+    {
+        $this->hydrate($datas);
+    }
 
     public function getId()
     {
@@ -74,7 +81,7 @@ class Post
         return $this->date;
     }
 
-    public function setDate(\DateTime $date)
+    public function setDate($date)
     {
         $this->date = $date;
     }

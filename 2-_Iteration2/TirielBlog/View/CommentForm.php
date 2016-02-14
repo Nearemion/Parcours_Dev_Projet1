@@ -13,25 +13,22 @@ class CommentForm
         $pseudo = new Input(array(
             'type' => 'text',
             'name' => 'pseudo',
-            'label' => 'Nom ou pseudo :*',
+            'label' => 'Nom ou pseudo :',
             'labelAttributes' => 'class="col-sm-4"',
-            'attributes' => 'placeholder="Votre nom"',
-            'attributes' => 'class="form-control col-sm-8"'
+            'attributes' => 'placeholder="Votre nom" class="form-control col-sm-8"'
         ));
         $mail = new Input(array(
             'type' => 'email',
             'name' => 'email',
-            'label' => 'Adresse mail :*',
+            'label' => 'Adresse mail :',
             'labelAttributes' => 'class="col-sm-4"',
-            'attributes' => 'placeholder="email@example.com"',
-            'attributes' => 'class="form-control col-sm-8"'
+            'attributes' => 'placeholder="email@example.com" class="form-control col-sm-8"'
         ));
         $comment = new Textarea(array(
             'name' => 'comment',
-            'label' => 'Commentaire :',
+            'label' => 'Commentaire :*',
             'labelAttributes' => 'class="col-sm-4"',
-            'attributes' => 'required',
-            'attributes' => 'class="form-control col-sm-8"'
+            'attributes' => 'class="form-control col-sm-8" required'
         ));
         $submit = new Input(array(
             'type' => 'submit',

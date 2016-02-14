@@ -4,6 +4,8 @@ namespace Lib\Entity;
 
 class Comment
 {
+    use \Lib\Hydrator;
+
     private $id;
     private $pseudo;
     private $mailAdress;
@@ -11,6 +13,11 @@ class Comment
     private $comment;
     private $date;
     private $postId;
+
+    public function __construct($datas)
+    {
+        $this->hydrate($datas);
+    }
     
     public function getId()
     {
@@ -53,9 +60,9 @@ class Comment
         return $this->gHash;
     }
     
-    public function setGHash()
+    public function setGHash($gHash)
     {
-        $this->gHash = md5(strtolower(trim($this->mailAdress)));
+        $this->gHash = $gHash;
     }
 
     public function getComment()

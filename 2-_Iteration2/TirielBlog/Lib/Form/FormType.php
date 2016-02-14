@@ -5,10 +5,10 @@ namespace Lib\Form;
 class FormType
 {
     use \Lib\Hydrator;
-	
+    
     private $action;
-	private $method;
-	private $attributes = [];
+    private $method;
+    private $attributes = [];
     private $fields = [];
 
     public function __construct($datas)
@@ -49,7 +49,7 @@ class FormType
     {
         $this->attributes[] = $attributes;
     }
-	
+    
     public function addField($field)
     {
         $this->fields[] = $field;
@@ -57,23 +57,31 @@ class FormType
 
     public function createView()
     {
+        if (!isset($_SESSION['token'])) {
+            $token = md5(uniqid(rand(), true));
+            $_SESSION['token'] = $token;
+        } else {
+            $token = $_SESSION['token'];
+        }
+
         $display = '
-		<form action="'.$this->action.'" method="'.$this->method.'"';
-		
-		if (!empty($this->attributes)) {
-			$display .= implode(' ', $this->attributes);
-		}
-		
-		$display .= '>';
+        <form action="'.$this->action.'" method="'.$this->method.'"';
+        
+        if (!empty($this->attributes)) {
+            $display .= implode(' ', $this->attributes);
+        }
+        
+        $display .= '>
+        <input type="hidden" name="csrf_token" value="'.$token.'" />';
 
         foreach ($this->fields as $field) {
-		$display .=
-		'<div class="form-group">'
-			.$field->buildWidget().
-		'</div>';
+            $display .=
+            '<div class="form-group">'
+                .$field->buildWidget().
+            '</div>';
         }
-		
-		$display .= '</form>';
+        
+        $display .= '</form>';
 
         return $display;
     }
