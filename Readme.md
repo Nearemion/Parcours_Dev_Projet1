@@ -45,18 +45,25 @@ They will be authorized the following:
 #### Files
 **Only changes from iteration 2 will be shown.**
 * PHP Files:
+  * index.php (modified)
+  * Controller\BlogController.php (modified)
   * Lib
-    * Entity/Comment.php (added)
+    * Entity
+      * Comment.php (added)
+      * Post.php (modified)
     * Form
       * Field.php (added, abstract class)
       * FormType.php (added, form builder)
       * Input.php (added)
       * Textarea.php (added)
     * Hydrator.php (Hydrating trait form Entities and Fields)
+  * Model\BlogManager.php (modified)
   * View
     * CommentForm.php (added)
+    * layout.php (modified)
     * SingleView.php (updated)
 * MySQL Files:
   * Database Schema (updated)
+  * Demo datas (updated)
 
 *__This file will be updated with actual file names, and with each iteration.__*
