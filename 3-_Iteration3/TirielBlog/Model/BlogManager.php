@@ -89,6 +89,9 @@ class BlogManager
                 $result[] = $comment;
             }
         }
+        if (empty($result)) {
+            header('Location:./View/404.php');
+        }
 
         return $result;
     }
