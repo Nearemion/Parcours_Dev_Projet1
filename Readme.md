@@ -66,4 +66,19 @@ They will be authorized the following:
   * Database Schema (updated)
   * Demo datas (updated)
 
+### Third iteration: Admin space
+#### Requirements:
+**Admin pages will be in protected space, like a sub-folder "/admin" protected with any method deemed suitable.**
+Administration will allow:
+* Adding, editing and deleting blog posts
+* Comment moderation
+
+**Comment moderation will take two options:** validation prior to publication, or suppression/edition after publication.
+An option will be accessible in the admin space to chose the preferred way.
+
+#### Files
+**Only changes from iteration 3 will be shown.**
+* PHP Files:
+* MySQL Files:
+
 *__This file will be updated with actual file names, and with each iteration.__*
