@@ -29,7 +29,7 @@ if (isset($_POST['comment'])) {
 }
 
 $uri = $_SERVER['REQUEST_URI'];
-$router = new Router($controller, $manager, $uri);
+$router = new Router($manager, $uri);
 $content = $router->route();
 
 include './View/layout.php';

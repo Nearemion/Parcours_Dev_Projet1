@@ -38,6 +38,8 @@ class BlogController
 
     public function indexAction($page = 1)
     {
+        $this->getManager()->setOffset(5);
+
         $posts = $this->manager->getPosts($page);
         foreach ($posts as $post) {
             $post->setDate(new \DateTime($post->getDate()));
