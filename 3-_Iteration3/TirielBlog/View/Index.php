@@ -35,7 +35,12 @@ class Index
                 $comments  = $post->getNbComment().' commentaires. ';
             }
 
-            $display .= '<div class="row"><h3 class="col-sm-8"><a href="/post-'.$post->getId().'">'.htmlspecialchars($post->getTitle()).'</a></h3><div class="col-sm-12">'.nl2br(htmlspecialchars($post->getContent())).'</div><p class="col-sm-offset-8 col-sm-4"><em>Par '.htmlspecialchars($post->getAuthor()).' le '.$post->getDate()->format('d-m-Y').'.</em> '.$comments.'</p></div>';
+            $display .=
+            '<div class="row">
+                <h3 class="col-sm-8"><a href="/post-'.$post->getId().'">'.htmlspecialchars($post->getTitle()).'</a></h3>
+                <div class="col-sm-12">'.nl2br(htmlspecialchars($post->getContent())).'</div>
+                <p class="col-sm-offset-8 col-sm-4"><em>Par '.htmlspecialchars($post->getAuthor()).' le '.$post->getDate()->format('d-m-Y').'.</em> '.$comments.'</p>
+            </div>';
         }
 
         $display .= '<div class="btn-group" role="button">';
