@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <routes>
     <route uri="/([0-9]*)" params="page" controller="BlogController" action="index" />
-    <route uri="/post-([0-9]+)" params="id" controller="BlogController" action="view" />
+    <route uri="/view/([0-9]+)" params="id" controller="BlogController" action="view" />
 </routes>

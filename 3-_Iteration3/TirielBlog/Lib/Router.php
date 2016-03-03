@@ -53,10 +53,9 @@ class Router
                 }
                 
                 return $content;
-            } else {
-                return $content = header('Location: View/404.php');
-            }
+            }            
         }
 
+        return $content = header('Location: /View/404.php');
     }
 }
