@@ -22,7 +22,6 @@ $viewLoader = new SplClassLoader('View', '');
 $viewLoader->register();
 
 $manager = new BlogManager;
-$controller = new BlogController($manager);
 
 if (isset($_POST['comment'])) {
     $manager->processCommentForm();

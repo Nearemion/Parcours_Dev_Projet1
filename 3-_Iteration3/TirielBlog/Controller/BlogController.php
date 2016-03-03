@@ -2,15 +2,14 @@
 
 namespace Controller;
 
+use Lib\Controller;
 use Lib\Form\FormType;
 use Model\BlogManager;
 use View\Index;
 use View\SingleView;
 
-class BlogController
+class BlogController extends Controller
 {
-    protected $manager;
-    protected $name;
     protected $totalPages;
 
     public function __construct(BlogManager $manager, $offset = 0, $limit = 5)
@@ -19,11 +18,6 @@ class BlogController
         $this->manager->setOffset($offset);
         $this->manager->setLimit($limit);
         $this->setTotalPages();
-    }
-
-    public function getManager()
-    {
-        return $this->manager;
     }
 
     public function getTotalPages()
