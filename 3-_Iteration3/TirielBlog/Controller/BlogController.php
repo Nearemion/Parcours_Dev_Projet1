@@ -12,11 +12,9 @@ class BlogController extends Controller
 {
     protected $totalPages;
 
-    public function __construct(BlogManager $manager, $offset = 0, $limit = 5)
+    public function __construct(BlogManager $manager)
     {
-        $this->manager = $manager;
-        $this->manager->setOffset($offset);
-        $this->manager->setLimit($limit);
+        parent::__construct($manager);
         $this->setTotalPages();
     }
 
@@ -32,8 +30,6 @@ class BlogController extends Controller
 
     public function indexAction($page = 1)
     {
-        $this->getManager()->setOffset(5);
-
         $posts = $this->manager->getPosts($page);
         foreach ($posts as $post) {
             $post->setDate(new \DateTime($post->getDate()));

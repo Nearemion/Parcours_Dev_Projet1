@@ -2,6 +2,8 @@
 
 namespace Lib;
 
+use Model\BlogManager;
+
 abstract class Controller
 {
     protected $manager;

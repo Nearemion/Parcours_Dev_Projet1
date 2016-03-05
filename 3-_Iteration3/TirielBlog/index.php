@@ -18,7 +18,7 @@ $libLoader->register();
 $modelLoader = new SplClassLoader('Model', '');
 $modelLoader->register();
 
-$viewLoader = new SplClassLoader('View', '');
+$viewLoader = new SplClassLoader('Web', '');
 $viewLoader->register();
 
 $manager = new BlogManager;
@@ -31,4 +31,4 @@ $uri = $_SERVER['REQUEST_URI'];
 $router = new Router($manager, $uri);
 $content = $router->route();
 
-include './View/layout.php';
+include './Web/layout.php';

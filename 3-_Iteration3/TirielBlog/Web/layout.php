@@ -1,6 +1,13 @@
 <?php
 $today = new \DateTime('now');
 
+function activeTab($string)
+{
+    if (preg_match('#^'.$string.'$#', $_SERVER['REQUEST_URI'])) {
+        return 'class="active"';
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -8,16 +15,24 @@ $today = new \DateTime('now');
     <title>Ben's Home Made Blog</title>
     <meta charset="utf-8" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="main.css" />
+    <link rel="stylesheet" type="text/css" href="/Web/css/main.css" />
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
     <header class="jumbotron">
         <h1>Ben's Home Made Blog</h1>
         <p>Baked with love!</p>
     </header>
-    <section>
-        <?php echo $content; ?>
+    <nav>
+        <ul class="nav nav-tabs nav-justified">
+            <li <?= activeTab('/\d*'); ?> ><a href="/">Accueil</a></li>
+            <li <?= activeTab('/view/\d+'); ?> ><a href="#">Post</a></li>
+            <li <?= activeTab('/contact'); ?> ><a href="/contact">Contact</a></li>
+            <li <?= activeTab('/autre'); ?> ><a href="/autre">Autre</a></li>
+        </ul>
+    </nav>
+    <section class="row">
+            <?php echo $content; ?>
     </section>
     <footer class="footer text-center">
         <div class="row">

@@ -3,8 +3,9 @@
 namespace Web\Blog;
 
 use Lib\Entity\Post;
+use Web\Blog\Blog;
 
-class Index
+class Index extends Blog
 {
     private $posts;
     private $pages;
@@ -17,7 +18,7 @@ class Index
 
     public function display($page)
     {
-        $display = '<h1>Liste des articles présentés sur ce blog:</h1><br />';
+        $content = '<h1>Liste des articles présentés sur ce blog:</h1><br />';
         $posts = $this->posts;
         $pages = $this->pages;
 
@@ -35,7 +36,7 @@ class Index
                 $comments  = $post->getNbComment().' commentaires. ';
             }
 
-            $display .=
+            $content .=
             '<div class="row">
                 <h3 class="col-sm-8"><a href="/view/'.$post->getId().'">'.htmlspecialchars($post->getTitle()).'</a></h3>
                 <div class="col-sm-12">'.nl2br(htmlspecialchars($post->getContent())).'</div>
@@ -43,17 +44,16 @@ class Index
             </div>';
         }
 
-        $display .= '<div class="btn-group" role="button">';
+        $content .= '<div><ul class="pagination">';
         for ($i=1; $i <= $pages; $i++) {
-            $display .= '<a href="/'.$i.'" ';
+            $content .= '<li';
             if ($i == $page) {
-                $display .= 'class="btn btn-primary">'.$i.'</a>';
-            } else {
-                $display .= 'class="btn btn-default">'.$i.'</a>';
+                $content .= ' class="active"';
             }
+            $content .= '><a href="/'.$i.'">'.$i.'</a></li>';
         }
-        $display .= '</div>';
+        $content .= '</ul></div>';
 
-        return $display;
+        return $this->getPage($content);
     }
 }

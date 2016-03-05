@@ -10,11 +10,17 @@ use \PDO;
 class BlogManager
 {
     protected $dao;
+    protected $config;
     protected $offset;
     protected $limit;
 
     public function __construct()
     {
+        $config = new \DOMDocument;
+        $config->load(__DIR__.'/../Config/config.xml');
+        $this->config = $config;
+        $this->setLimit();
+        $this->setOffset($this->limit);
         $this->dao = PDOFactory::getMysqlCo();
     }
 
@@ -35,10 +41,13 @@ class BlogManager
         return $this->limit;
     }
 
-    public function setLimit($limit)
+    public function setLimit()
     {
-        if (is_int($limit) && isset($limit)) {
-            $this->limit = $limit;
+        $nodes = $this->config->getElementsByTagName('postsperpage');
+        foreach ($nodes as $node) {
+            if ($node->getAttribute('page') == 'blog') {
+                $this->limit = intval($node->getAttribute('limit'));
+            }
         }
     }
 

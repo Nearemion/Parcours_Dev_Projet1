@@ -47,15 +47,13 @@ class Router
                 $action = $route->getAction().'Action';
 
                 if (!empty($route->getVars())) {
-                    $content = $controller->$action($route->getVars());
+                    return $page = $controller->$action($route->getVars());
                 } else {
-                    $content = $controller->$action();
+                    return $page = $controller->$action();
                 }
-                
-                return $content;
-            }            
+            }
         }
 
-        return $content = header('Location: /View/404.php');
+        return $page = header('Location: /Web/404.php');
     }
 }
