@@ -1,6 +1,6 @@
 <?php
 
-namespace View;
+namespace Web\Blog;
 
 use Lib\Form\FormType;
 use Lib\Form\Input;

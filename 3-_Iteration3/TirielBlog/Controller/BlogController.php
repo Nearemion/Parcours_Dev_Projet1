@@ -5,8 +5,8 @@ namespace Controller;
 use Lib\Controller;
 use Lib\Form\FormType;
 use Model\BlogManager;
-use View\Index;
-use View\SingleView;
+use Web\Blog\Index;
+use Web\Blog\SingleView;
 
 class BlogController extends Controller
 {
