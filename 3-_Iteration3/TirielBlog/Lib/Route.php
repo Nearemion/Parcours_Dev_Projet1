@@ -8,13 +8,15 @@ class Route
     private $params;
     private $controller;
     private $action;
+    private $parent;
     private $vars;
 
-    public function __construct($uri, $controller, $action, $params = null)
+    public function __construct($uri, $controller, $action, $parent, $params = null)
     {
         $this->setUri($uri);
         $this->setController($controller);
         $this->setAction($action);
+        $this->setParent($parent);
         $this->setParams($params);
     }
 
@@ -66,5 +68,15 @@ class Route
     public function setVars($var)
     {
         $this->vars = $var;
+    }
+
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
     }
 }

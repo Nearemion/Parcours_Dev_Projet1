@@ -21,14 +21,8 @@ $modelLoader->register();
 $viewLoader = new SplClassLoader('Web', '');
 $viewLoader->register();
 
-$manager = new BlogManager;
-
-if (isset($_POST['comment'])) {
-    $manager->processCommentForm();
-}
-
 $uri = $_SERVER['REQUEST_URI'];
-$router = new Router($manager, $uri);
+$router = new Router($uri);
 $content = $router->route();
 
 include './Web/layout.php';

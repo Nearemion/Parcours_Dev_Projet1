@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <routes>
-    <public>
+    <blog>
         <route uri="/(\d*)" params="page" controller="BlogController" action="index" />
         <route uri="/view/(\d+)" params="id" controller="BlogController" action="view" />
-    </public>
+        <route uri="/login" params="" controller="BlogController" action="login" />
+    </blog>
     <admin>
         <route uri="/admin/(\d*)" params="page" controller="AdminController" action="index" />
-        <route uri="/admin/new" params="" controller="AdminController" action="new" />
+        <route uri="/admin/new/post" params="" controller="AdminController" action="newPost" />
+        <route uri="/admin/new/user" params="" controller="AdminController" action="newUser" />
         <route uri="/admin/post/edit/(\d+)" params="id" controller="AdminController" action="editPost" />
         <route uri="/admin/post/delete/(\d+)" params="id" controller="AdminController" action="deletePost" />
+        <route uri="/logout" params="" controller="AdminController" action="logout" />
     </admin>
 </routes>

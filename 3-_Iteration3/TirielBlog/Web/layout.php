@@ -28,7 +28,7 @@ function activeTab($string)
             <li <?= activeTab('/\d*'); ?> ><a href="/">Accueil</a></li>
             <li <?= activeTab('/view/\d+'); ?> ><a href="#">Post</a></li>
             <li <?= activeTab('/contact'); ?> ><a href="/contact">Contact</a></li>
-            <li <?= activeTab('/autre'); ?> ><a href="/autre">Autre</a></li>
+            <li <?= activeTab('/login'); ?> ><a href="/login">Connexion</a></li>
         </ul>
     </nav>
     <section class="row">

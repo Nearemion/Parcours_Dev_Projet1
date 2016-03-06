@@ -2,13 +2,13 @@
 
 namespace Lib;
 
-use Model\BlogManager;
+use Lib\Manager;
 
 abstract class Controller
 {
     protected $manager;
 
-    public function __construct(BlogManager $manager)
+    public function __construct(Manager $manager)
     {
         $this->manager = $manager;
     }

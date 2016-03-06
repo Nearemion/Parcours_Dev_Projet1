@@ -4,11 +4,9 @@ namespace Web\Blog;
 
 class Blog
 {
-    protected $page;
-
     public function getPage($content)
     {
-        $this->page = 
+        $page = 
         '<aside class="col-sm-3">
             <h3>Bienvenue sur mon blog!</h3>
             <p>Ce post est là pour expliquer le pourquoi du comment.<br /><br />
@@ -26,6 +24,6 @@ class Blog
         </aside>
         <article class="col-sm-9">'.$content.'</article>';
 
-        return $this->page;
+        return $page;
     }
 }
