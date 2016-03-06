@@ -5,6 +5,8 @@ namespace Controller;
 use Lib\Controller;
 use Model\AdminManager;
 use Web\Admin\Index;
+use Web\Admin\SingleView;
+use Web\Admin\UserIndex;
 
 class AdminController extends Controller
 {
@@ -63,6 +65,29 @@ class AdminController extends Controller
         }
     }
 
+    public function viewAction($id)
+    {
+        $post = $this->manager->getSinglePost($id);
+        $page = new SingleView($post);
+        $content = $page->display();
+
+        return $content;
+    }
+
+    public function userAction($page = 1)
+    {
+        if ($this->isAdmin()) {
+            $users = $this->manager->getUsers($page);
+
+            $userPages = ceil($this->manager->countUsers() / $this->manager->getLimit());
+
+            $index = new UserIndex($users, $userPages);
+            $content = $index->display($page);
+
+            return $content;
+        }
+    }
+
     public function newUserAction()
     {
         $username = $_POST['username'];
@@ -72,10 +97,20 @@ class AdminController extends Controller
                 'salt' => password_hash(file_get_contents(__DIR__.'/../Lib/Salt/salt'), PASSWORD_DEFAULT, ['cost' => 5])
         ];
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT, $options);
-        
+
         $role = $_POST['role'];
 
         $this->manager->addUser($username, $password, $role);
+    }
+
+    public function editUserAction($id)
+    {
+        return;
+    }
+
+    public function deleteUserAction($id)
+    {
+        return;
     }
 
     public function newPostAction($id)

@@ -37,10 +37,17 @@ class Index extends Admin
             }
 
             $content .=
-            '<div class="row">
-                <h4 class="col-sm-8"><a href="/view/'.$post->getId().'">'.htmlspecialchars($post->getTitle()).'</a></h4>
-                <div class="col-sm-8">'.nl2br(htmlspecialchars($post->getContent())).'</div>
+            '<div class="row separator">
+                <article class="col-sm-6">
+                <h4><a href="/admin/post/'.$post->getId().'">'.htmlspecialchars($post->getTitle()).'</a></h4>
+                <p>'.nl2br(htmlspecialchars($post->getContent())).'</p>
+                </article>
                 <p class="col-sm-4"><em>Par '.htmlspecialchars($post->getAuthor()).' le '.$post->getDate()->format('d-m-Y').'.</em> '.$comments.'</p>
+                <p class="col-sm-2">
+                    <a href="/admin/post/'.$post->getId().'" class="btn btn-info"><span class="glyphicon glyphicon-ok"></span></a>
+                    <a href="/admin/post/edit/'.$post->getId().'" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href="/admin/post/delete/'.$post->getId().'" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
+                </p>
             </div>';
         }
 

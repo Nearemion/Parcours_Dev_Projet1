@@ -7,10 +7,11 @@
     </blog>
     <admin>
         <route uri="/admin/(\d*)" params="page" action="index" />
+        <route uri="/admin/post/(\d+)" params="id" action="view" />
         <route uri="/admin/post/new" params="" action="newPost" />
         <route uri="/admin/post/edit/(\d+)" params="id" action="editPost" />
         <route uri="/admin/post/delete/(\d+)" params="id" action="deletePost" />
-        <route uri="/admin/user/" params="" action="user" />
+        <route uri="/admin/user/(\d*)" params="id" action="user" />
         <route uri="/admin/user/new" params="" action="newUser" />
         <route uri="/admin/user/edit/(\d+)" params="id" action="editUser" />
         <route uri="/admin/user/delete/(\d+)" params="id" action="deleteUser" />
