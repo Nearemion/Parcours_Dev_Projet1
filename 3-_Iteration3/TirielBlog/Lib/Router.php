@@ -26,13 +26,15 @@ class Router
         $routes = $xml->getElementsByTagName('route');
 
         foreach ($routes as $xmlroute) {
+            $parent = $xmlroute->parentNode->nodeName;
             $uri = $xmlroute->getAttribute('uri');
-            $controller = $xmlroute->getAttribute('controller');
+
+            $controller = ucfirst($parent.'Controller');
             $action = $xmlroute->getAttribute('action');
             $params = $xmlroute->getAttribute('params');
-            $parent = $xmlroute->parentNode->nodeName;
+            $manager = $parent.'Manager';
 
-            $route = new Route($uri, $controller, $action, $parent, $params);
+            $route = new Route($uri, $controller, $action, $manager, $params);
             $this->routes[] = $route;
         }
     }
@@ -44,13 +46,13 @@ class Router
         foreach ($this->routes as $route) {
             if (preg_match('#^'.$route->getUri().'$#', $uri, $matches)) {
 
-                $managerClass = $route->getParent().'Manager';
-
                 if (!empty($route->getParams())) {
                     $route->setVars($matches[1]);
                 }
+
+                $managerClass = $route->getManager();
                 $controllerClass = '\Controller\\'.$route->getController();
-                $controller  = new $controllerClass($this->$managerClass);
+                $controller  = new $controllerClass($this->$managerClass);                
                 $action = $route->getAction().'Action';
 
                 if (!empty($route->getVars())) {
