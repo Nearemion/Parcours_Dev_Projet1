@@ -58,7 +58,7 @@ class AdminController extends Controller
                     $_SESSION['username'] = $user->getUsername();
                     $_SESSION['role'] = $user->getRole();
 
-                    header('Location: /admin/');
+                    return header('Location: /admin/');
                 }
             } else {
                 return header('Location: /login');

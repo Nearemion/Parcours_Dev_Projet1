@@ -20,6 +20,13 @@ class Blog
                 <li>un système de commentaire avec possibilité d\'utilisation des Gravatar</li>
                 <li>un système d\'administration avec authentification pour poster, éditer ou effacer des posts, modérer les commentaires à priori ou à posteriori, et une gestion des utilisateurs.</li>
             </ul>
+            <br />
+            <h4>Pour visiter l\'interface d\'administration :</h4>
+            <ul>
+                <li>Utilisateur: Admin</li>
+                <li>Mot de passe: Admin</li>
+            </ul>
+            <br />
             Merci pour votre lecture!</p>
         </aside>
         <article class="col-sm-9">'.$content.'</article>';
