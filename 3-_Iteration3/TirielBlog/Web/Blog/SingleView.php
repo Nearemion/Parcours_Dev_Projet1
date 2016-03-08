@@ -31,35 +31,41 @@ class SingleView extends Blog
 
         $content =
             '<div class="row">
-            <h1 class="col-sm-8">'.htmlspecialchars($post->getTitle()).'</h1>
-            <div class="col-sm-12">'.nl2br(htmlspecialchars($post->getContent())).'</div><div class="col-sm-offset-7 col-sm-5">
-            <p><em>Par '.htmlspecialchars($post->getAuthor()).' le '.$post->getDate()->format('d-m-Y').' à '.$post->getDate()->format('H:i:s').'.</em>';
+                <h1 class="col-sm-8">'.htmlspecialchars($post->getTitle()).'</h1>
+                <div class="col-sm-12">'.nl2br(htmlspecialchars($post->getContent())).'</div>
+                <div class="col-sm-offset-7 col-sm-5">
+                    <p><em>Par '.htmlspecialchars($post->getAuthor()).' le '.$post->getDate()->format('d-m-Y').' à '.$post->getDate()->format('H:i:s').'.</em>';
 
         if (empty($comments)) {
             $content .= ' Aucun commentaire.';
         }
 
-        $content .= '</p>
-            </div></div>';
+        $content .= 
+            '</p>
+            </div>
+        </div>
+            <div class="row">
+                <a href="/" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-chevron-left"> </span>Retour à l\'index</a>
+            </div><br />';
 
         foreach ($comments as $comment) {
                 $content .=
-                '<div class="row">
-                    <div class="col-sm-12"><img src="http://www.gravatar.com/avatar/'.$comment->getGHash().'?s=80" alt="Gravatar" class="col-sm-1" />
-                    <h3 class="col-sm-8"><a href="mailto:'.htmlspecialchars($comment->getMailAdress()).'">'.htmlspecialchars($comment->getPseudo()).'</a></h3></div>
-                    <div class="col-sm-offset-1 col-sm-11">
-                        <p>'.htmlspecialchars($comment->getComment()).'</p>
+                '<aside class="separator">
+                    <div class="row">
+                        <img src="http://www.gravatar.com/avatar/'.$comment->getGHash().'?s=80" alt="Gravatar" class="col-sm-1" />
+                        <div class="col-sm-11">
+                            <h3 class="col-sm-10"><a href="mailto:'.htmlspecialchars($comment->getMailAdress()).'">'.htmlspecialchars($comment->getPseudo()).'</a></h3>
+                            <p class="col-sm-2"><em>Le '.$comment->getCommentDate()->format('Y-m-d').' à '.$comment->getCommentDate()->format('H:i:s').'</em></p>
+                            <div class="col-sm-11">
+                                <p>'.htmlspecialchars($comment->getComment()).'</p>
+                            </div>
+                        </div>
                     </div>
-                    <p class="col-sm-offset-8"><em>Le '.$comment->getCommentDate()->format('Y-m-d').' à '.$comment->getCommentDate()->format('H:i:s').'</em></p></div>';
+                </aside><br />';
         }
 
-        $content .=
-        '<br /><div><a href="/"><button class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-chevron-left"> </span>Retour à l\'index</button></a></div><br />';
-
-        $content .=
-        '<div class="row">
-            <div class="well col-sm-offset-2 col-sm-8">'.$commentForm->commentForm($post->getId()).'<br />* : élément obligatoire.</div>
-        </div>';
+        $commentForm = new CommentForm;
+        $content .= $commentForm->commentForm($post->getId()).'<br />';;
 
         return $this->getPage($content);
     }

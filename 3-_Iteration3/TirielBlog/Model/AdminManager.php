@@ -17,13 +17,15 @@ class AdminManager extends Manager
         }
     }
 
-    public function getUserbyName($username)
+    public function getUserByName($username)
     {
-        $query = $this->dao->prepare('SELECT * FROM blog_users WHERE username = '.$username);
+        $query = $this->dao->prepare('SELECT * FROM blog_users WHERE username = :username');
+        $query->bindParam(':username', $username, \PDO::PARAM_STR);
         $query->execute();
-        $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Lib\Entity\User');
+        $row = $query->fetch(\PDO::FETCH_ASSOC);
+        $user = new User($row);
 
-        return $query->fetchAll();
+        return $user;
     }
 
     public function getUserbyId($id)
@@ -55,11 +57,24 @@ class AdminManager extends Manager
 
     public function addUser($username, $password, $role)
     {
-        $query = $this->dao->prepare('INSERT INTO blog_users (username, password, role) VALUES (:username, :password, :role)');
-        $query->bindParam(':username', $username, \PDO::PARAM_STR);
-        $query->bindParam(':password', $password, \PDO::PARAM_STR);
-        $query->bindParam(':role', $role, \PDO::PARAM_INT);
-        return $query->execute();
+        if (($_POST['csrf_token'] == $_SESSION['token'])/* && ($_POST['csrf_token_time'] >= (time() - (15*60)))*/) {
+            $query = $this->dao->prepare('INSERT INTO blog_users (username, password, role) VALUES (:username, :password, :role)');
+            $query->bindParam(':username', $username, \PDO::PARAM_STR);
+            $query->bindParam(':password', $password, \PDO::PARAM_STR);
+            $query->bindParam(':role', $role, \PDO::PARAM_INT);
+            return $query->execute();
+        }
+    }
+
+    public function editUser($id, $username, $password, $role)
+    {
+        if (($_POST['csrf_token'] == $_SESSION['token'])/* && ($_POST['csrf_token_time'] >= (time() - (15*60)))*/) {
+            $query = $this->dao->prepare('UPDATE blog_users SET username = :username, password = :password, role = :role WHERE id ='.$id);
+            $query->bindParam(':username', $username, \PDO::PARAM_STR);
+            $query->bindParam(':password', $password, \PDO::PARAM_STR);
+            $query->bindParam(':role', intval($role), \PDO::PARAM_INT);
+            return $query->execute();
+        }
     }
 
     public function countUsers()

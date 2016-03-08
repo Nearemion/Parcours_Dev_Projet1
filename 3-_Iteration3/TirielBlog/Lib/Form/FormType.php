@@ -57,11 +57,14 @@ class FormType
 
     public function createView()
     {
-        if (!isset($_SESSION['token'])) {
+        if (!isset($_SESSION['token']) || !isset($_SESSION['token_time'])) {
             $token = md5(uniqid(rand(), true));
+            $tokenTime = time();
             $_SESSION['token'] = $token;
+            $_SESSION['token_time'] = $tokenTime;
         } else {
             $token = $_SESSION['token'];
+            $tokenTime = $_SESSION['token_time'];
         }
 
         $display = '
@@ -72,7 +75,8 @@ class FormType
         }
         
         $display .= '>
-        <input type="hidden" name="csrf_token" value="'.$token.'" />';
+        <input type="hidden" name="csrf_token" value="'.$token.'" />
+        <input type="hidden" name="csrf_token_time" value="'.$tokenTime.'" />';
 
         foreach ($this->fields as $field) {
             $display .=

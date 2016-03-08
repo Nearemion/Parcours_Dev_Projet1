@@ -9,16 +9,16 @@ session_start();
 
 require __DIR__.'/Lib/SplClassLoader.php';
 
-$controllerLoader = new SplClassLoader('Controller', '');
+$controllerLoader = new SplClassLoader('Controller', '.');
 $controllerLoader->register();
 
-$libLoader= new SplClassLoader('Lib', '');
+$libLoader= new SplClassLoader('Lib', '.');
 $libLoader->register();
 
-$modelLoader = new SplClassLoader('Model', '');
+$modelLoader = new SplClassLoader('Model', '.');
 $modelLoader->register();
 
-$viewLoader = new SplClassLoader('Web', '');
+$viewLoader = new SplClassLoader('Web', '.');
 $viewLoader->register();
 
 $uri = $_SERVER['REQUEST_URI'];

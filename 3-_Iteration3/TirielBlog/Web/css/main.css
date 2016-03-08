@@ -12,3 +12,11 @@
     width: 100%;
     padding-top: 10px;
 }
+#commentForm, #userForm {
+    width: 60%;
+    margin: auto;
+}
+#login {
+    width: 300px;
+    margin: auto;
+}

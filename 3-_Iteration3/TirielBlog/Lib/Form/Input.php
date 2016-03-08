@@ -36,7 +36,10 @@ class Input extends Field
     {
         $attributes = implode(' ', $this->attributes);
         $display = '';
-        
+
+        if ($this->getType() == 'radio') {
+            $display .= '<div class="radio">';
+        }
         if (!in_array($this->getType(), array('hidden', 'reset', 'submit'))) {
             $display .= '<label for="'.$this->name.'"';
 			if(!empty($this->labelAttributes)) {
@@ -63,6 +66,9 @@ class Input extends Field
             }
             
             $display .= strval($attributes).'/>';
+        }
+        if ($this->getType() == 'radio') {
+            $display .= '</div>';
         }
 
         return $display;

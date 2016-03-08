@@ -6,6 +6,7 @@ use Lib\Controller;
 use Lib\Form\FormType;
 use Model\BlogManager;
 use Web\Blog\Index;
+use Web\Blog\LoginForm;
 use Web\Blog\SingleView;
 
 class BlogController extends Controller
@@ -48,6 +49,14 @@ class BlogController extends Controller
         $post = $this->manager->getSinglePost($id);
         $page = new SingleView($post);
         $content = $page->display();
+
+        return $content;
+    }
+
+    public function loginAction()
+    {
+        $page = new LoginForm;
+        $content = $page->loginForm();
 
         return $content;
     }

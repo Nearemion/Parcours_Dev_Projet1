@@ -39,13 +39,13 @@ class CommentForm
             'type' => 'submit',
             'name' => 'submit',
             'value' => 'Commenter',
-            'attributes' => 'class="btn btn-primary"'
+            'attributes' => 'class="btn btn-primary col-sm-6"'
         ));
                 
         $form = new FormType(array(
-            'action' => '/post-'.$id,
+            'action' => '/view/'.$id,
             'method' => 'post',
-            'attributes' => 'class="form-horizontal"'
+            'attributes' => 'class="well form-horizontal" id="commentForm"'
         ));
         $form->addField($postId);
         $form->addField($pseudo);

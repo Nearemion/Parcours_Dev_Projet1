@@ -4,23 +4,22 @@ namespace Lib\Entity;
 
 class User
 {
+    use \Lib\Hydrator;
+
     private $id;
     private $username;
     private $password;
     private $role;
-    private $roles;
+    public $roles = [];
 
     const NONE = 0;
     const AUTHOR = 1;
     const ADMIN = 2;
 
-    public function __construct($id, $username, $password, $role)
+    public function __construct($data)
     {
-        $this->setId($id);
-        $this->setUsername($username);
-        $this->setPassword($password);
-        $this->setRole($role);
-        $this->setRoles([NONE, AUTHOR, ADMIN]);
+        $this->hydrate($data);
+        $this->setRoles(array(self::NONE, self::AUTHOR, self::ADMIN));
     }
 
     public function getId()
@@ -60,9 +59,7 @@ class User
 
     public function setRole($role)
     {
-        if (in_array($role, $this->getRoles())) {
-           $this->role = $role;
-        }
+        $this->role = intval($role);
     }
 
     public function getRoles()
@@ -72,6 +69,8 @@ class User
 
     public function setRoles($roles)
     {
-        $this->roles = $roles;
+        foreach ($roles as $role) {
+            $this->roles[] = $role;
+        }
     }
 }

@@ -26,9 +26,12 @@ function activeTab($string)
     <nav>
         <ul class="nav nav-tabs nav-justified">
             <li <?= activeTab('/\d*'); ?> ><a href="/">Accueil</a></li>
-            <li <?= activeTab('/view/\d+'); ?> ><a href="#">Post</a></li>
             <li <?= activeTab('/contact'); ?> ><a href="/contact">Contact</a></li>
+            <?php if (isset($_SESSION['is_auth']) && $_SESSION['is_auth'] == true && $_SESSION['role'] == 2) { ?>
+            <li <?= activeTab('/admin/'); ?> ><a href="/admin/">Administration</a></li>
+            <?php } else { ?>
             <li <?= activeTab('/login'); ?> ><a href="/login">Connexion</a></li>
+            <?php } ?>
         </ul>
     </nav>
     <section class="row">

@@ -16,6 +16,23 @@ class UserIndex extends Admin
         $this->pages = $pages;
     }
 
+    public function constName($role) {
+        $userClass = new \ReflectionClass('\Lib\Entity\User');
+        $constants = $userClass->getConstants();
+
+        $constName = null;
+        foreach ($constants as $name => $value)
+        {
+            if ($value == $role)
+            {
+                $constName = $name;
+                break;
+            }
+        }
+
+        return $constName;
+    }
+
     public function display($page)
     {
         $content = '<h1>Liste des utilisateurs de ce blog:</h1><br />';
@@ -26,12 +43,11 @@ class UserIndex extends Admin
             $roles = $user->getRoles();
             $content .=
             '<article class="row separator">
-                <h4 class="col-sm-6"><a href="/admin/post/'.$user->getId().'">'.$user->getUsername().'</a></h4>
-                <p class="col-sm-4">Role: '.$roles[$user->getRole()].'</p>
+                <h4 class="col-sm-6">'.$user->getUsername().'</h4>
+                <p class="col-sm-4">Role: '.$this->constName($user->getRole()).'</p>
                 <p class="col-sm-2">
-                    <a href="/admin/post/'.$post->getId().'" class="btn btn-info"><span class="glyphicon glyphicon-ok"></span></a>
-                    <a href="/admin/post/edit/'.$post->getId().'" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></a>
-                    <a href="/admin/post/delete/'.$post->getId().'" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
+                    <a href="/admin/user/edit/'.$user->getId().'" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href="/admin/user/delete/'.$user->getId().'" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
                 </p>
             </article>';
         }

@@ -23,9 +23,9 @@ class Router
 
         $xml = new \DOMDocument;
         $xml->load(__DIR__.'/../Config/routes.xml');
-        $routes = $xml->getElementsByTagName('route');
+        $xmlroutes = $xml->getElementsByTagName('route');
 
-        foreach ($routes as $xmlroute) {
+        foreach ($xmlroutes as $xmlroute) {
             $parent = $xmlroute->parentNode->nodeName;
             $uri = $xmlroute->getAttribute('uri');
 
@@ -55,14 +55,14 @@ class Router
                 $controller  = new $controllerClass($this->$managerClass);                
                 $action = $route->getAction().'Action';
 
+                if (isset($_POST['comment'])) {
+                    $this->blogManager->processCommentForm();
+                }
+
                 if (!empty($route->getVars())) {
                     return $page = $controller->$action($route->getVars());
                 } else {
                     return $page = $controller->$action();
-                }
-
-                if (isset($_POST['comment'])) {
-                    $manager->processCommentForm();
                 }
             }
         }

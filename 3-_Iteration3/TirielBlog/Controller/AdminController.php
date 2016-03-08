@@ -6,6 +6,7 @@ use Lib\Controller;
 use Model\AdminManager;
 use Web\Admin\Index;
 use Web\Admin\SingleView;
+use Web\Admin\UserForm;
 use Web\Admin\UserIndex;
 
 class AdminController extends Controller
@@ -30,23 +31,37 @@ class AdminController extends Controller
 
     public function isAdmin()
     {
-        /*if ($_SESSION['role'] == 2) {*/
-            return true;/*
+        if ($_SESSION['role'] == 2) {
+            return true;
         } else {
-            return header('Location: /login');/*
-        }*/
+            return header('Location: /login');
+        }
+    }
+
+    public function logoutAction()
+    {
+        session_destroy();
+        header('Location: /');
     }
 
     public function indexAction($page = 1)
     {
         if (isset($_POST['username'])) {
-            $user = $this->manager->getUserbyName($username);
+            $username = $_POST['username'];
 
-            if (password_verify($_POST['password'], $user->getPassword())) {
-                $_SESSION['is_auth'] = true;
-                $_SESSION['id'] = $user->getId();
-                $_SESSION['username'] = $user->getUsername();
-                $_SESSION['role'] = $user->getRole();
+            if (($_POST['csrf_token'] == $_SESSION['token'])/* && ($_POST['csrf_token_time'] >= (time() - (15*60)))*/) {
+                $user = $this->manager->getUserByName($username);
+
+                if (password_verify($_POST['password'], $user->getPassword())) {
+                    $_SESSION['is_auth'] = true;
+                    $_SESSION['id'] = $user->getId();
+                    $_SESSION['username'] = $user->getUsername();
+                    $_SESSION['role'] = $user->getRole();
+
+                    header('Location: /admin/');
+                }
+            } else {
+                return header('Location: /login');
             }
         }
         
@@ -88,8 +103,24 @@ class AdminController extends Controller
         }
     }
 
-    public function newUserAction()
+    public function userFormAction($id = null)
     {
+        $userForm = new UserForm;
+        if (!empty($id)) {
+            $user = $this->manager->getUserbyId($id);
+            return $userForm->userForm($user);
+
+        } else {
+            return $userForm->userForm();
+        }
+    }
+
+    public function saveUserAction()
+    {
+        if ($_POST['password'] != $_POST['password2']) {
+            header('Location: /admin/user/new');
+        }
+
         $username = $_POST['username'];
 
         $options = [
@@ -100,12 +131,15 @@ class AdminController extends Controller
 
         $role = $_POST['role'];
 
-        $this->manager->addUser($username, $password, $role);
-    }
-
-    public function editUserAction($id)
-    {
-        return;
+        if (isset($_POST['id'])) {
+            $id = $_POST['id'];
+            
+            $this->manager->editUser($id, $username, $password, $role);
+        } else {
+            $this->manager->addUser($username, $password, $role);
+        }
+        
+        return header('Location: /admin/user');
     }
 
     public function deleteUserAction($id)

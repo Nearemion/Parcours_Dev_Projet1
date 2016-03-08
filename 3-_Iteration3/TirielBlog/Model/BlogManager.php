@@ -18,7 +18,9 @@ class BlogManager extends Manager
 
     public function processCommentForm()
     {
-        if ($_POST['csrf_token'] == $_SESSION['token']) {
+        $timeFifteen = time()-900;
+
+        if (($_POST['csrf_token'] == $_SESSION['token'])/* && ($_POST['csrf_token_time'] >= $timeFifteen)*/) {
             if (!empty($_POST['pseudo'])) {
                 $pseudo = htmlspecialchars($_POST['pseudo']);
             } else {
