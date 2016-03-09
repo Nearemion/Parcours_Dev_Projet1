@@ -77,6 +77,14 @@ class AdminManager extends Manager
         }
     }
 
+    public function deleteUser($id)
+    {
+        if (($_POST['csrf_token'] == $_SESSION['token'])/* && ($_POST['csrf_token_time'] >= (time() - (15*60)))*/) {
+            $query = $this->dao->prepare('DELETE FROM blog_users WHERE id ='.$id);
+            return $query->execute();
+        }
+    }
+
     public function countUsers()
     {
         $rows = $this->dao->query('SELECT COUNT(*) FROM blog_users')->fetchColumn();

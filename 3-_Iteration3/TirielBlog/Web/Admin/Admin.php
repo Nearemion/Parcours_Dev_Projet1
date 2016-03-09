@@ -22,6 +22,7 @@ class Admin
                 <li role="presentation"'.$this->activeTab('/admin/post/new').'><a href="/admin/post/new">Nouveau post</a></li>
                 <li role="presentation"'.$this->activeTab('/admin/user').'><a href="/admin/user">Utilisateurs</a></li>
                 <li role="presentation"'.$this->activeTab('/admin/user/new').'><a href="/admin/user/new">Nouvel utilisateur</a></li>
+                <li role="presentation"'.$this->activeTab('/admin/config').'><a href="/admin/config">Configuration</a></li>
                 <li role="presentation"'.$this->activeTab('/logout').' ><a href="/logout">Déconnexion</a></li>
             </ul>
         </nav>

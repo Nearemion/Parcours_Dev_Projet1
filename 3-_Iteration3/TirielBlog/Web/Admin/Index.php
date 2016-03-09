@@ -46,7 +46,7 @@ class Index extends Admin
                 <p class="col-sm-2">
                     <a href="/admin/post/'.$post->getId().'" class="btn btn-info"><span class="glyphicon glyphicon-ok"></span></a>
                     <a href="/admin/post/edit/'.$post->getId().'" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></a>
-                    <a href="/admin/post/delete/'.$post->getId().'" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
+                    <a href="/admin/post/delete/'.$post->getId().'" class="btn btn-danger delete"><span class="glyphicon glyphicon-remove"></span></a>
                 </p>
             </div>';
         }

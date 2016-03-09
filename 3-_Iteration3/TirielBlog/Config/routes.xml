@@ -21,5 +21,7 @@
         <route uri="/admin/user/delete/(\d+)" params="id" action="deleteUser" />
         -->
         <route uri="/logout" params="" action="logout" />
+        <route uri="/admin/config" params="" action="configForm" />
+        <route uri="/admin/config/save" params="" action="saveConfig" />
     </admin>
 </routes>

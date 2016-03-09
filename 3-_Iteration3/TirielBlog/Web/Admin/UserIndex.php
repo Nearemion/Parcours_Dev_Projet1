@@ -47,7 +47,7 @@ class UserIndex extends Admin
                 <p class="col-sm-4">Role: '.$this->constName($user->getRole()).'</p>
                 <p class="col-sm-2">
                     <a href="/admin/user/edit/'.$user->getId().'" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></a>
-                    <a href="/admin/user/delete/'.$user->getId().'" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
+                    <a href="/admin/user/delete/'.$user->getId().'" class="btn btn-danger delete"><span class="glyphicon glyphicon-remove"></span></a>
                 </p>
             </article>';
         }

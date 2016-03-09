@@ -82,11 +82,13 @@ class AdminController extends Controller
 
     public function viewAction($id)
     {
-        $post = $this->manager->getSinglePost($id);
-        $page = new SingleView($post);
-        $content = $page->display();
+        if ($this->isAdmin()) {
+            $post = $this->manager->getSinglePost($id);
+            $page = new SingleView($post);
+            $content = $page->display();
 
-        return $content;
+            return $content;
+        }
     }
 
     public function userAction($page = 1)
@@ -105,46 +107,54 @@ class AdminController extends Controller
 
     public function userFormAction($id = null)
     {
-        $userForm = new UserForm;
-        if (!empty($id)) {
-            $user = $this->manager->getUserbyId($id);
-            return $userForm->userForm($user);
+        if ($this->isAdmin()) {
+            $userForm = new UserForm;
+            if (!empty($id)) {
+                $user = $this->manager->getUserbyId($id);
+                return $userForm->userForm($user);
 
-        } else {
-            return $userForm->userForm();
+            } else {
+                return $userForm->userForm();
+            }
         }
     }
 
     public function saveUserAction()
     {
-        if ($_POST['password'] != $_POST['password2']) {
-            header('Location: /admin/user/new');
-        }
+        if ($this->isAdmin()) {
+            if ($_POST['password'] != $_POST['password2']) {
+                header('Location: /admin/user/new');
+            }
 
-        $username = $_POST['username'];
+            $username = $_POST['username'];
 
-        $options = [
-                'cost' => 10,
-                'salt' => password_hash(file_get_contents(__DIR__.'/../Lib/Salt/salt'), PASSWORD_DEFAULT, ['cost' => 5])
-        ];
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT, $options);
+            $options = [
+                    'cost' => 10,
+                    'salt' => password_hash(file_get_contents(__DIR__.'/../Lib/Salt/salt'), PASSWORD_DEFAULT, ['cost' => 5])
+            ];
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT, $options);
 
-        $role = $_POST['role'];
+            $role = $_POST['role'];
 
-        if (isset($_POST['id'])) {
-            $id = $_POST['id'];
+            if (isset($_POST['id'])) {
+                $id = $_POST['id'];
+                
+                $this->manager->editUser($id, $username, $password, $role);
+            } else {
+                $this->manager->addUser($username, $password, $role);
+            }
             
-            $this->manager->editUser($id, $username, $password, $role);
-        } else {
-            $this->manager->addUser($username, $password, $role);
+            return header('Location: /admin/user');
         }
-        
-        return header('Location: /admin/user');
     }
 
     public function deleteUserAction($id)
     {
-        return;
+        if ($this->isAdmin()) {
+            $this->manager->deleteUser($id);
+
+            return header('Location: /admin/user');
+        }
     }
 
     public function newPostAction($id)
@@ -158,6 +168,16 @@ class AdminController extends Controller
     }
 
     public function deletePostAction($id)
+    {
+        return;
+    }
+
+    public function configAction()
+    {
+        return;
+    }
+
+    public function saveConfigAction($id)
     {
         return;
     }

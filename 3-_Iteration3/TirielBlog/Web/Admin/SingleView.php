@@ -46,7 +46,7 @@ class SingleView extends Admin
             <div class="row">
                 <a href="/admin/" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-chevron-left"> </span>Retour à l\'index</a>
                 <a href="/admin/post/edit/'.$post->getId().'" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span>Editer le post</a>
-                <a href="/admin/post/delete/'.$post->getId().'" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span>Supprimer le post</a>
+                <a href="/admin/post/delete/'.$post->getId().'" class="btn btn-danger btn-sm delete"><span class="glyphicon glyphicon-remove"></span>Supprimer le post</a>
             </div><br />';
 
         foreach ($comments as $comment) {
