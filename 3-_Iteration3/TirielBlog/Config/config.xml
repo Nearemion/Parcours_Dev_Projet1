@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<config>
-    <postsperpage page="blog" limit="5" />
-    <postsperpage page="admin" limit="20" />
-</config>

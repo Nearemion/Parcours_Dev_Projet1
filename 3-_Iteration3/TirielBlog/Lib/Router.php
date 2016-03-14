@@ -21,17 +21,15 @@ class Router
         $this->blogManager = new BlogManager;
         $this->adminManager = new AdminManager;
 
-        $xml = new \DOMDocument;
-        $xml->load(__DIR__.'/../Config/routes.xml');
-        $xmlroutes = $xml->getElementsByTagName('route');
+        $jsonroutes = json_decode(file_get_contents(__DIR__.'/../Config/routes.json'));
 
-        foreach ($xmlroutes as $xmlroute) {
-            $parent = $xmlroute->parentNode->nodeName;
-            $uri = $xmlroute->getAttribute('uri');
+        foreach ($jsonroutes as $jsonroute) {
+            $uri = $jsonroute->uri;
+            $params = $jsonroute->params;
+            $action = $jsonroute->action;
+            $parent = $jsonroute->parent;
 
             $controller = ucfirst($parent.'Controller');
-            $action = $xmlroute->getAttribute('action');
-            $params = $xmlroute->getAttribute('params');
             $manager = $parent.'Manager';
 
             $route = new Route($uri, $controller, $action, $manager, $params);
@@ -67,6 +65,21 @@ class Router
             }
         }
 
-        return $page = header('Location: /Web/404.php');
+        $json = file_get_contents(__DIR__.'/../Config/routes.json');
+        $jsonroutes = json_decode($json);
+        $constants = get_defined_constants(true);
+$json_errors = array();
+foreach ($constants["json"] as $name => $value) {
+ if (!strncmp($name, "JSON_ERROR_", 11)) {
+  $json_errors[$value] = $name;
+ }
+}
+
+// Affiche les erreurs pour les différentes profondeurs.
+foreach (range(1, 5, 4) as $depth) {
+    var_dump(json_decode($json, true, $depth));
+    echo 'Dernière erreur : ', $json_errors[json_last_error()], PHP_EOL, PHP_EOL;
+}
+var_dump($this->routes);
     }
 }

@@ -12,7 +12,7 @@
     width: 100%;
     padding-top: 10px;
 }
-#commentForm, #userForm, #error404 {
+#commentForm, #userForm, #configForm, #error404 {
     width: 60%;
     margin: auto;
 }

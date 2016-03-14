@@ -9,12 +9,7 @@ class AdminManager extends Manager
 {
     public function setLimit()
     {
-        $nodes = $this->config->getElementsByTagName('postsperpage');
-        foreach ($nodes as $node) {
-            if ($node->getAttribute('page') == 'admin') {
-                $this->limit = intval($node->getAttribute('limit'));
-            }
-        }
+        $this->limit = $this->config->postsperpage->admin;
     }
 
     public function getUserByName($username)

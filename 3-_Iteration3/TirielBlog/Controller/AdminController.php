@@ -4,6 +4,7 @@ namespace Controller;
 
 use Lib\Controller;
 use Model\AdminManager;
+use Web\Admin\ConfigForm;
 use Web\Admin\Index;
 use Web\Admin\SingleView;
 use Web\Admin\UserForm;
@@ -172,13 +173,40 @@ class AdminController extends Controller
         return;
     }
 
-    public function configAction()
+    public function configFormAction()
     {
-        return;
+        if ($this->isAdmin()) {
+            $page = new ConfigForm;
+            $content = $page->configForm();
+
+            return $content;
+        } else {
+            return header('Location: /login');
+        }
     }
 
-    public function saveConfigAction($id)
+    public function configSaveAction($id)
     {
-        return;
+        if ($this->isAdmin()) {
+            $string =
+            '{
+                "postsperpage": {        
+                        "admin": '.$_POST['postsAdmin'].',
+                        "blog": '.$_POST['postsBlog'].'
+                },';
+
+            if ($_POST['moderateComs'] == 1) {
+                $string .= '"moderate_comments": true
+            }';
+            $query = $this->manager->dao->query('ALTER TABLE blog_comments MODIFY published tinyint(3) UNSIGNED NOT NULL DEFAULT 1');
+            $query->execute();
+
+            } else {
+                $string .= '"moderate_comments": false
+            }';
+            $query = $this->manager->dao->query('ALTER TABLE blog_comments MODIFY published tinyint(3) UNSIGNED NOT NULL DEFAULT 0');
+            $query->execute();
+            }
+        }
     }
 }

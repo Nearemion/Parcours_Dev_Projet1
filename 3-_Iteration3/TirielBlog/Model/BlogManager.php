@@ -8,12 +8,7 @@ class BlogManager extends Manager
 {
     public function setLimit()
     {
-        $nodes = $this->config->getElementsByTagName('postsperpage');
-        foreach ($nodes as $node) {
-            if ($node->getAttribute('page') == 'blog') {
-                $this->limit = intval($node->getAttribute('limit'));
-            }
-        }
+        $this->limit = $this->config->postsperpage->blog;
     }
 
     public function processCommentForm()

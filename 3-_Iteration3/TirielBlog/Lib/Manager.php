@@ -15,9 +15,7 @@ abstract class Manager
 
     public function __construct()
     {
-        $config = new \DOMDocument;
-        $config->load(__DIR__.'/../Config/config.xml');
-        $this->config = $config;
+        $this->config = json_decode(file_get_contents(__DIR__.'/../Config/config.json'));
         $this->setLimit();
         $this->setOffset($this->limit);
         $this->dao = PDOFactory::getMysqlCo();
@@ -63,7 +61,7 @@ abstract class Manager
     public function getSinglePost($id)
     {
         $result = [];
-        $query = $this->dao->prepare('SELECT blog_posts.id as id, blog_posts.title, blog_posts.author, blog_posts.content, blog_posts.date as postDate, blog_comments.id as commentId, blog_comments.pseudo, blog_comments.mailAdress, blog_comments.gHash, blog_comments.comment, blog_comments.commentDate, blog_comments.postId FROM blog_posts LEFT JOIN blog_comments ON blog_posts.id = blog_comments.postId WHERE blog_posts.id = :id');
+        $query = $this->dao->prepare('SELECT blog_posts.id as id, blog_posts.title, blog_posts.author, blog_posts.content, blog_posts.date as postDate, blog_comments.id as commentId, blog_comments.pseudo, blog_comments.mailAdress, blog_comments.gHash, blog_comments.comment, blog_comments.commentDate, blog_comments.postId FROM blog_posts LEFT JOIN blog_comments ON blog_posts.id = blog_comments.postId WHERE blog_posts.id = :id AND blog_comments.published = 1');
         $query->bindParam(':id', $id, \PDO::PARAM_INT);
         $query->execute();
 

@@ -1,0 +1,98 @@
+{
+    "blogIndex": {
+        "uri": "/(\\d*)",
+        "params": "page",
+        "action": "index",
+        "parent": "blog"
+    },
+    "blogView": {
+        "uri": "/view/(\\d+)",
+        "params": "id",
+        "action": "view",
+        "parent": "blog"
+    },
+    "blogLogin": {
+        "uri": "/login",
+        "params": null,
+        "action": "login",
+        "parent": "blog"
+    },
+    "adminIndex": {
+        "uri": "/admin/(\\d*)",
+        "params": "page",
+        "action": "index",
+        "parent": "admin"
+    },
+    "adminView": {
+        "uri": "/admin/post/(\\d+)",
+        "params": "id",
+        "action": "view",
+        "parent": "admin"
+    },
+    "adminNewPost": {
+        "uri": "/admin/post/new",
+        "params": null,
+        "action": "newPost",
+        "parent": "admin"
+    },
+    "adminEditPost": {
+        "uri": "/admin/post/edit/(\\d+)",
+        "params": "id",
+        "action": "editPost",
+        "parent": "admin"
+    },
+    "adminDeletePost": {
+        "uri": "/admin/post/delete/(\\d+)",
+        "params": "id",
+        "action": "deletePost",
+        "parent": "admin"
+    },
+    "adminUser": {
+        "uri": "/admin/user",
+        "params": null,
+        "action": "user",
+        "parent": "admin"
+    },
+    "adminUserNew": {
+        "uri": "/admin/user/new",
+        "params": null,
+        "action": "userForm",
+        "parent": "admin"
+    },
+    "adminUserEdit": {
+        "uri": "/admin/user/edit/(\\d+)",
+        "params": "id",
+        "action": "userForm",
+        "parent": "admin"
+    },
+    "adminUserSave": {
+        "uri": "/admin/user/save/(\\d+)",
+        "params": null,
+        "action": "saveUser",
+        "parent": "admin"
+    },
+    "adminUserDelete": {
+        "uri": "/admin/user/delete/(\\d+)",
+        "params": "id",
+        "action": "deleteUser",
+        "parent": "admin"
+    },
+    "adminLogout": {
+        "uri": "/logout",
+        "params": null,
+        "action": "logout",
+        "parent": "admin"
+    },
+    "adminConfig": {
+        "uri": "/admin/config",
+        "params": null,
+        "action": "configForm",
+        "parent": "admin"
+    },
+    "adminConfigSave": {
+        "uri": "/admin/config/save",
+        "params": null,
+        "action": "configSave",
+        "parent": "admin"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "postsperpage": {        
+            "admin": 20,
+            "blog": 5
+    },
+    "moderate_comments": true
+}
