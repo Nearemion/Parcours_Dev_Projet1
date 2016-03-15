@@ -64,22 +64,6 @@ class Router
                 }
             }
         }
-
-        $json = file_get_contents(__DIR__.'/../Config/routes.json');
-        $jsonroutes = json_decode($json);
-        $constants = get_defined_constants(true);
-$json_errors = array();
-foreach ($constants["json"] as $name => $value) {
- if (!strncmp($name, "JSON_ERROR_", 11)) {
-  $json_errors[$value] = $name;
- }
-}
-
-// Affiche les erreurs pour les différentes profondeurs.
-foreach (range(1, 5, 4) as $depth) {
-    var_dump(json_decode($json, true, $depth));
-    echo 'Dernière erreur : ', $json_errors[json_last_error()], PHP_EOL, PHP_EOL;
-}
-var_dump($this->routes);
+        return header('Location: /Web/404.php');
     }
 }

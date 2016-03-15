@@ -49,6 +49,7 @@ class SingleView extends Blog
             </div><br />';
 
         foreach ($comments as $comment) {
+            if ($comment->getPublished() == 1) {
                 $content .=
                 '<aside class="separator">
                     <div class="row">
@@ -62,6 +63,12 @@ class SingleView extends Blog
                         </div>
                     </div>
                 </aside><br />';
+            } else {
+                $content .=
+                '<aside class="separator">
+                <h4>Commentaire en cours de modération</h4>
+                </aside><br />';
+            }
         }
 
         $commentForm = new CommentForm;

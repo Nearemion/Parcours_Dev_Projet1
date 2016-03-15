@@ -80,6 +80,24 @@ class AdminManager extends Manager
         }
     }
 
+    public function saveModComsConfig($bool)
+    {
+        if (is_bool($bool)) {
+            $query = $this->dao->prepare('ALTER TABLE blog_comments MODIFY published TINYINT UNSIGNED NOT NULL DEFAULT :bool');
+
+            if ($bool == true) {
+                $int = 0;
+                $query->bindParam(':bool', $int, \PDO::PARAM_INT);
+            } else {
+                $int = 1;
+                $query->bindParam(':bool', $int, \PDO::PARAM_INT);
+            }
+
+            $query->execute();
+            return header('Location: /admin/config');
+        }
+    }
+
     public function countUsers()
     {
         $rows = $this->dao->query('SELECT COUNT(*) FROM blog_users')->fetchColumn();

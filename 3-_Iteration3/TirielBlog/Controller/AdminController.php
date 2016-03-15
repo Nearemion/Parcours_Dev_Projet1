@@ -185,28 +185,23 @@ class AdminController extends Controller
         }
     }
 
-    public function configSaveAction($id)
+    public function configSaveAction()
     {
         if ($this->isAdmin()) {
-            $string =
-            '{
-                "postsperpage": {        
-                        "admin": '.$_POST['postsAdmin'].',
-                        "blog": '.$_POST['postsBlog'].'
-                },';
+            $this->config->postsperpage->admin = $_POST['postsAdmin'];
+            $this->config->postsperpage->blog = $_POST['postsBlog'];
 
-            if ($_POST['moderateComs'] == 1) {
-                $string .= '"moderate_comments": true
-            }';
-            $query = $this->manager->dao->query('ALTER TABLE blog_comments MODIFY published tinyint(3) UNSIGNED NOT NULL DEFAULT 1');
-            $query->execute();
+            if (isset($_POST['moderateComs']) && $_POST['moderateComs'] == 1) {
+                $this->config->moderate_comments = false;
 
+                $this->manager->saveModComsConfig(false);
             } else {
-                $string .= '"moderate_comments": false
-            }';
-            $query = $this->manager->dao->query('ALTER TABLE blog_comments MODIFY published tinyint(3) UNSIGNED NOT NULL DEFAULT 0');
-            $query->execute();
+                $this->config->moderate_comments = true;
+
+                $this->manager->saveModComsConfig(true);
             }
+
+            file_put_contents(__DIR__.'/../Config/config.json', json_encode($this->config));
         }
     }
 }

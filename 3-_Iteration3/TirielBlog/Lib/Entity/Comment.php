@@ -13,6 +13,7 @@ class Comment
     private $comment;
     private $commentDate;
     private $postId;
+    private $published;
 
     public function __construct($datas)
     {
@@ -97,5 +98,15 @@ class Comment
         if (is_int($postId)) {
             $this->postId = $postId;
         }
+    }
+
+    public function getPublished()
+    {
+        return $this->published;
+    }
+    
+    public function setPublished($pub)
+    {
+        $this->published = $pub;
     }
 }

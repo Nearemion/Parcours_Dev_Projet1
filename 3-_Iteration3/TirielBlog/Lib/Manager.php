@@ -47,7 +47,8 @@ abstract class Manager
 
         $query = $this->dao->prepare('SELECT * FROM blog_posts ORDER BY date DESC LIMIT :offset, :limit');
         $query->bindParam(':offset', $currentOffset, \PDO::PARAM_INT);
-        $query->bindParam(':limit', $this->limit, \PDO::PARAM_INT);
+        $limit = intval($this->limit);
+        $query->bindParam(':limit', $limit, \PDO::PARAM_INT);
         $query->execute();
 
         while (($row = $query->fetch(\PDO::FETCH_ASSOC)) !== false) {
@@ -61,7 +62,11 @@ abstract class Manager
     public function getSinglePost($id)
     {
         $result = [];
-        $query = $this->dao->prepare('SELECT blog_posts.id as id, blog_posts.title, blog_posts.author, blog_posts.content, blog_posts.date as postDate, blog_comments.id as commentId, blog_comments.pseudo, blog_comments.mailAdress, blog_comments.gHash, blog_comments.comment, blog_comments.commentDate, blog_comments.postId FROM blog_posts LEFT JOIN blog_comments ON blog_posts.id = blog_comments.postId WHERE blog_posts.id = :id AND blog_comments.published = 1');
+        $query = $this->dao->prepare(
+            'SELECT blog_posts.id as id, blog_posts.title, blog_posts.author, blog_posts.content, blog_posts.date as postDate, blog_comments.id as commentId, blog_comments.pseudo, blog_comments.mailAdress, blog_comments.gHash, blog_comments.comment, blog_comments.commentDate, blog_comments.postId, blog_comments.published
+            FROM blog_posts
+            LEFT JOIN blog_comments ON blog_posts.id = blog_comments.postId
+            WHERE blog_posts.id = :id');
         $query->bindParam(':id', $id, \PDO::PARAM_INT);
         $query->execute();
 
@@ -82,7 +87,9 @@ abstract class Manager
                     'mailAdress' => $row['mailAdress'],
                     'gHash' => $row['gHash'],
                     'comment' => $row['comment'],
-                    'commentDate' => new \DateTime($row['commentDate']));
+                    'commentDate' => new \DateTime($row['commentDate']),
+                    'postId' => $row['postId'],
+                    'published' => $row['published']);
                 $comment = new Comment($commentArray);
                 $result[] = $comment;
             }
