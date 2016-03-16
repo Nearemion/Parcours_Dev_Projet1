@@ -44,22 +44,36 @@ class SingleView extends Admin
             </div>
         </div>
             <div class="row">
-                <a href="/admin/" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-chevron-left"> </span>Retour à l\'index</a>
-                <a href="/admin/post/edit/'.$post->getId().'" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span>Editer le post</a>
-                <a href="/admin/post/delete/'.$post->getId().'" class="btn btn-danger btn-sm delete"><span class="glyphicon glyphicon-remove"></span>Supprimer le post</a>
+                <a href="/admin/" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-chevron-left"> </span> Retour à l\'index</a>
+                <a href="/admin/post/edit/'.$post->getId().'" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"> </span> Editer le post</a>
+                <a href="/admin/post/delete/'.$post->getId().'" class="btn btn-danger btn-sm delete"><span class="glyphicon glyphicon-remove"> </span> Supprimer le post</a>
             </div><br />';
 
         foreach ($comments as $comment) {
                 $content .=
                 '<aside class="separator">
                     <div class="row">
-                        <img src="http://www.gravatar.com/avatar/'.$comment->getGHash().'?s=80" alt="Gravatar" class="col-sm-1" />
+                        <img src="http://www.gravatar.com/avatar/'.$comment->getGHash().'?s=80" alt="Gravatar" class="col-sm-1" />';
+                        if ($comment->getPublished() == 0) {
+                            $content .='
+                            <div class="col-sm-1"><span class="label label-info">A modérer</span></div>';
+                        }
+                        $content .= '
                         <div class="col-sm-11">
                             <h3 class="col-sm-10"><a href="mailto:'.htmlspecialchars($comment->getMailAdress()).'">'.htmlspecialchars($comment->getPseudo()).'</a></h3>
                             <p class="col-sm-2"><em>Le '.$comment->getCommentDate()->format('Y-m-d').' à '.$comment->getCommentDate()->format('H:i:s').'</em></p>
                             <div class="col-sm-11">
                                 <p>'.htmlspecialchars($comment->getComment()).'</p>
                             </div>
+                        </div>
+                        <div class="col-sm-offset-6 col-sm-6">
+                        <a href="/admin/" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-chevron-left"> </span> Retour à l\'index</a>';
+                    if ($comment->getPublished() == 0) {
+                        $content .='
+                        <a href="/admin/coms/publish/'.$comment->getId().'" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-ok"> </span> Publier le commentaire</a>';
+                        }
+                        $content .= '
+                        <a href="/admin/coms/delete/'.$comment->getId().'" class="btn btn-danger btn-sm delete"><span class="glyphicon glyphicon-remove"> </span> Supprimer le commentaire</a>
                         </div>
                     </div>
                 </aside><br />';
