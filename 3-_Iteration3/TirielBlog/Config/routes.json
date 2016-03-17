@@ -77,6 +77,18 @@
         "action": "deleteUser",
         "parent": "admin"
     },
+    "adminComsPublish": {
+        "uri": "/admin/coms/publish/(\\d+)",
+        "params": "id",
+        "action": "comPublish",
+        "parent": "admin"
+    },
+    "adminComsDelete": {
+        "uri": "/admin/coms/delete/(\\d+)",
+        "params": "id",
+        "action": "comDelete",
+        "parent": "admin"
+    },
     "adminLogout": {
         "uri": "/logout",
         "params": null,

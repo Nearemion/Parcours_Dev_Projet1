@@ -158,7 +158,7 @@ class AdminController extends Controller
         }
     }
 
-    public function newPostAction($id)
+    public function newPostAction()
     {
         return;
     }
