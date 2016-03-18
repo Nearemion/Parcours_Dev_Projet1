@@ -2,6 +2,7 @@
 
 namespace Model;
 
+use Lib\Entity\Comment;
 use Lib\Entity\User;
 use Lib\Manager;
 
@@ -74,10 +75,14 @@ class AdminManager extends Manager
 
     public function deleteUser($id)
     {
-        if (($_POST['csrf_token'] == $_SESSION['token'])/* && ($_POST['csrf_token_time'] >= (time() - (15*60)))*/) {
-            $query = $this->dao->prepare('DELETE FROM blog_users WHERE id ='.$id);
-            return $query->execute();
-        }
+        $query = $this->dao->prepare('DELETE FROM blog_users WHERE id ='.$id);
+        return $query->execute();
+    }
+
+    public function deletePost($id)
+    {
+        $query = $this->dao->prepare('DELETE FROM blog_posts WHERE id ='.$id);
+        return $query->execute();
     }
 
     public function saveModComsConfig($bool)
@@ -96,6 +101,28 @@ class AdminManager extends Manager
             $query->execute();
             return header('Location: /admin/config');
         }
+    }
+
+    public function getCom($id)
+    {
+        $query = $this->dao->prepare('SELECT * FROM blog_comments WHERE id ='.$id);
+        $query->execute();
+        $row = $query->fetch(\PDO::FETCH_ASSOC);
+        $comment = new Comment($row);
+
+        return $comment;
+    }
+
+    public function publishCom($id)
+    {
+        $query = $this->dao->prepare('UPDATE blog_comments SET published = 1 WHERE id ='.$id);
+        return $query->execute();
+    }
+
+    public function comDelete($id)
+    {
+        $query = $this->dao->prepare('DELETE FROM blog_comments WHERE id ='.$id);
+        return $query->execute();
     }
 
     public function countUsers()

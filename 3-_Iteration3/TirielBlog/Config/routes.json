@@ -32,13 +32,13 @@
     "adminNewPost": {
         "uri": "/admin/post/new",
         "params": null,
-        "action": "newPost",
+        "action": "postForm",
         "parent": "admin"
     },
     "adminEditPost": {
         "uri": "/admin/post/edit/(\\d+)",
         "params": "id",
-        "action": "editPost",
+        "action": "postForm",
         "parent": "admin"
     },
     "adminDeletePost": {

@@ -6,6 +6,7 @@ use Lib\Controller;
 use Model\AdminManager;
 use Web\Admin\ConfigForm;
 use Web\Admin\Index;
+use Web\Admin\PostForm;
 use Web\Admin\SingleView;
 use Web\Admin\UserForm;
 use Web\Admin\UserIndex;
@@ -158,19 +159,48 @@ class AdminController extends Controller
         }
     }
 
-    public function newPostAction()
+    public function postFormAction($id = null)
     {
-        return;
-    }
+        if ($this->isAdmin()) {
+            $postForm = new PostForm;
 
-    public function editPostAction($id)
-    {
-        return;
+            if (!is_null($id)) {
+                $post = $this->manager->getSinglePost($id);
+
+                return $postForm->postForm($post);
+            } else {
+                return $postForm->postForm();
+            }
+        }
     }
 
     public function deletePostAction($id)
     {
-        return;
+        if ($this->isAdmin()) {
+            $this->manager->deletePost($id);
+
+            return header('Location: /admin/');
+        }
+    }
+
+    public function comPublishAction($id)
+    {
+        if ($this->isAdmin()) {            
+            $this->manager->publishCom($id);
+
+            $com = $this->manager->getCom($id);
+            return header('Location: /admin/post/'.$com->getPostId());
+        }
+    }
+
+    public function comDeleteAction($id)
+    {
+        if ($this->isAdmin()) {
+            $com = $this->manager->getCom($id);
+
+            $this->manager->comDelete($id);
+            return header('Location: /admin/post/'.$com->getPostId());
+        }
     }
 
     public function configFormAction()

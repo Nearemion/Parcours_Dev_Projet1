@@ -20,3 +20,9 @@
     width: 300px;
     margin: auto;
 }
+.hiddendiv {
+    display: none;
+    white-space: pre-wrap;
+    padding: 5px;
+    word-wrap: break-word;
+}

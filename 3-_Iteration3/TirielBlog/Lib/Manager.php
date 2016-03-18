@@ -72,7 +72,7 @@ abstract class Manager
 
         while (($row = $query->fetch(\PDO::FETCH_ASSOC)) !== false) {
             $postArray = array(
-                'id' => $row['id'],
+                'id' => intval($row['id']),
                 'title' => $row['title'],
                 'author' => $row['author'],
                 'content' => $row['content'],
@@ -82,7 +82,7 @@ abstract class Manager
 
             if (!empty($row['commentId'])) {
                 $commentArray = array(
-                    'id' => $row['commentId'],
+                    'id' => intval($row['commentId']),
                     'pseudo' => $row['pseudo'],
                     'mailAdress' => $row['mailAdress'],
                     'gHash' => $row['gHash'],

@@ -28,7 +28,7 @@ class PostForm extends Admin
         $content = new Textarea(array(
             'name' => 'content',
             'label' => 'Contenu :',
-            'attributes' => 'class="form-control" required'
+            'attributes' => 'rows="10" class="form-control" id="content" required'
             ));
 
         $submit = new Input(array(
@@ -38,10 +38,10 @@ class PostForm extends Admin
             'attributes' => 'class="btn btn-primary"'
             ));
 
-        if ($post !== null) {
-            $title->setValue($post->getTitle());
-            $author->setValue($post->getAuthor());
-            $content->setValue($post->getContent());
+        if (!is_null($post)) {
+            $title->setValue($post[0]->getTitle());
+            $author->setValue($post[0]->getAuthor());
+            $content->setPlaceholder($post[0]->getContent());
         }
 
         $form = new FormType(array(
@@ -55,7 +55,7 @@ class PostForm extends Admin
         $form->addField($content);
         $form->addField($submit);
 
-        if ($post !== null) {
+        if (!is_null($post)) {
             $content = '<h3>Editer un post :</h3>';
         } else {
             $content = '<h3>Nouveau post :</h3>';
