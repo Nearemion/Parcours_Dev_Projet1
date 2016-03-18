@@ -3,6 +3,7 @@
 namespace Model;
 
 use Lib\Entity\Comment;
+use Lib\Entity\Post;
 use Lib\Entity\User;
 use Lib\Manager;
 
@@ -49,6 +50,21 @@ class AdminManager extends Manager
         }
 
         return $users;
+    }
+
+    public function savePost(Post $post)
+    {
+        if (!is_null($post->getId())) {
+            $query = $this->dao->prepare('UPDATE blog_posts SET title = :title, content = :content, author = :author, date = NOW() WHERE id = :id');
+            $query->bindParam(':id', $post->getId(), \PDO::PARAM_INT);
+        } else {
+            $query = $this->dao->prepare('INSERT INTO blog_posts (title, content, author, date) VALUES (:title, :content, :author, NOW())');
+        }
+        $query->bindParam(':title', $post->getTitle(), \PDO::PARAM_STR);
+        $query->bindParam(':content', $post->getContent(), \PDO::PARAM_STR);
+        $query->bindParam(':author', $post->getAuthor(), \PDO::PARAM_STR);
+
+        return $query->execute;
     }
 
     public function addUser($username, $password, $role)

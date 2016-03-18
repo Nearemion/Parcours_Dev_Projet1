@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Lib\Controller;
+use Lib\Entity\User;
 use Model\AdminManager;
 use Web\Admin\ConfigForm;
 use Web\Admin\Index;
@@ -33,7 +34,7 @@ class AdminController extends Controller
 
     public function isAdmin()
     {
-        if ($_SESSION['role'] == 2) {
+        if ($_SESSION['role'] == User::ADMIN) {
             return true;
         } else {
             return header('Location: /login');
@@ -170,6 +171,20 @@ class AdminController extends Controller
                 return $postForm->postForm($post);
             } else {
                 return $postForm->postForm();
+            }
+        }
+    }
+
+    public function savePostAction()
+    {
+        if ($this->isAdmin()) {
+            $post = new Post($_POST);
+            $this->manager->savePost($post);
+
+            if (!is_null($post->getId())) {
+                return header('Location: /admin/post/'.$post->getId());
+            } else {
+                return header('Location: /admin/');
             }
         }
     }

@@ -41,6 +41,12 @@
         "action": "postForm",
         "parent": "admin"
     },
+    "adminSavePost": {
+        "uri": "/admin/post/save/",
+        "params": null,
+        "action": "savePost",
+        "parent": "admin"
+    },
     "adminDeletePost": {
         "uri": "/admin/post/delete/(\\d+)",
         "params": "id",
@@ -66,7 +72,7 @@
         "parent": "admin"
     },
     "adminUserSave": {
-        "uri": "/admin/user/save/(\\d+)",
+        "uri": "/admin/user/save/",
         "params": null,
         "action": "saveUser",
         "parent": "admin"
